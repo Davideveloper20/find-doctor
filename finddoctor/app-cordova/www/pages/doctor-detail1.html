@@ -1,0 +1,119 @@
+<template>
+    <div class="page">
+      <div class="page-content ptr-content" @ptr:refresh="loadMore">
+        <div class="ptr-preloader" style="top:-35px">
+          <div class="preloader"></div>
+          <div class="ptr-arrow"></div>
+        </div>
+        <div class="block">
+          <h2 class="mR no-margin-bottom text-color-primary">Perfil del Especialista</h2>
+          <a href="#" class="link back title-font-12 text-color-light">
+            <u>Volver a la búsqueda</u>
+          </a>
+        </div>
+        <div class="card no-margin shadow-inverted" style="border-top-left-radius: 30px;border-top-right-radius: 30px;height: calc(100% - 48px);">
+          <div class="list media-list no-margin">
+            <ul>
+              <li>
+                <div class="item-content">
+                  <div class="item-media"><img src="{{profileimage}}" width="60" class="rounded-10" /></div>
+
+                  <!-- <div class="item-media"><img src="" width="80" class="rounded-10" /></div> -->
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title mR title-font-14">Doctor Shaw</div>
+                      <div class="item-after">5 <i class="material-icons dorado title-font-18">star</i></div>
+                    </div>
+                    <div class="item-text mL text-color-primary title-font-16 margin-top">Profesional Certificado</div>
+                    <div class="item-subtitle mL title-font-12 text-color-light" style="white-space: normal">Medellín , Antioquia, Colombia</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="card-body padding-horizontal" style="height: calc(100% - 20%);">
+            <div class="block no-padding" style="height: 100%">
+              <div class="toolbar tabbar no-after" id="tab-doctor-profile">
+                <div class="toolbar-inner">
+                  <a href="#about-me" class="tab-link title-font-15">Sobre mí</a>
+                  <a href="#comments" class="tab-link title-font-15">Opiniones</a>
+                  <a href="#prices" class="tab-link title-font-15">Precios</a>
+                  <a href="#experience" class="tab-link title-font-15">Experiencia</a>
+                </div>
+              </div>
+              <div class="tabs-swipeable-wrap">
+                <div class="tabs">
+                  <div id="about-me" class="page-content tab tab-active padding-top">
+                    <p class="mL title-font-14 no-margin text-color-dark">
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id labore aut ipsa, rerum fugiat voluptatum laborum consequatur eum numquam, magni. Explicabo corporis debitis incidunt hic nulla modi error alias rerum.
+                    </p>
+                  </div>
+                  <div id="comments" class="page-content tab padding-top" style="overflow-y: auto !important;">
+                    <div class="list" style="overflow-y: auto !important;">
+                      <li class="item-content btn-content">
+                        <div class="item-inner">
+                          <a class="button button-app primary solid button-app-2" href="/doctor-comment/{{iddoctor}}"><i class="fas fa-plus fa-fw"></i>Agregar opinión</a>
+                        </div>
+                      </li>
+                    </div>
+                  </div>
+                  <div id="prices" class="page-content tab padding-top">
+                    <div class="list media-list">
+                      <ul>
+                        
+                          <li>
+                            <a href="#" class="item-link item-content">
+                              <div class="item-media">
+                                <i class="material-icons">library_books</i>
+                              </div>
+                              <div class="item-inner no-margin">
+                                <div class="item-title-row">
+                                  <div class="item-title mB">MEdicina general</div>
+                                  <div class="item-after">60 minutos</div>
+                                </div>
+                                <div class="item-subtitle">Valor: <span class="price">100000</span></div>
+                                <div class="item-subtitle">Valor pre-pagado: <span class="price">60000</span></div>
+                              </div>
+                            </a>
+                          </li>
+                        
+                      </ul>
+                    </div>
+                  </div>
+                  <div id="experience" class="page-content tab padding-top">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+    return {
+      data: function () {
+        return {
+          //doc: this.data,
+          //rating: parseFloat(this.data.rating).toFixed(1),
+        };
+      },
+      on: {
+        pageAfterIn: function (event, page) {
+          var self = this;
+          app.tab.show('#comments')
+        }
+      },
+      methods: {
+        loadMore: function (e, done) {
+          var self = this;
+          var $ = self.$$;
+  
+          setTimeout(function () {
+            homeView.router.refreshPage()
+            done();
+          }, 1000);
+        }
+      },
+    };
+  </script>

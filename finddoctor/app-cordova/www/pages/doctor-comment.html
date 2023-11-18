@@ -1,0 +1,145 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="f7-icons">chevron_left</i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">
+          <div class="block text-align-center subtit">
+            Agregar Opinion a Doctor
+          </div>
+        </div>
+        <div class="right">
+          <img src="assets/imgs/icon.png" alt="Find Doctor">
+        </div>
+      </div>
+    </div>
+    <div class="page-content login-screen-content pb-0">
+      <div class="page-content tab tab-active no-padding" style="">
+        <form id="form-search" action="">
+          <div class="list">
+            <ul>
+              <li>
+                <div class="item-content item-input rflex px-05 mt-2">
+                  <div class="item-inner px-05">
+                    <div class="item-title">Puntualidad</div>
+                    <div class="item-input-wrap iconinput input-group">
+                      <input type="number" name="puntualidad" id="puntualidad" min="0" max="5" step="1" placeholder="Valore Puntualidad" data-translate="puntualidad-ph">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content item-input rflex px-05 mt-2">
+                  <div class="item-inner px-05">
+                    <div class="item-title">Atención</div>
+                    <div class="item-input-wrap iconinput input-group">
+                      <input type="number" name="atencion" id="atencion" min="0" max="5" step="1" placeholder="Valore Atención" data-translate="atencion-ph">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content item-input rflex px-05 mt-2">
+                  <div class="item-inner px-05">
+                    <div class="item-title">Experiencia</div>
+                    <div class="item-input-wrap iconinput input-group">
+                      <input type="number" name="experiencia" id="experiencia" min="0" max="5" step="1" placeholder="Valore Experiencia" data-translate="experiencia-ph">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content item-input rflex px-05 mt-2">
+                  <div class="item-inner px-05">
+                    <div class="item-title">Apariencia</div>
+                    <div class="item-input-wrap iconinput input-group">
+                      <input type="number" name="apariencia" id="apariencia" min="0" max="5" step="1" placeholder="Valore Apariencia" data-translate="apariencia-ph">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content item-input rflex px-05 mt-2">
+                  <div class="item-inner px-05">
+                    <div class="item-title">Instalaciones/Instrumentos</div>
+                    <div class="item-input-wrap iconinput input-group">
+                      <input type="number" name="instalaciones" id="instalaciones" min="0" max="5" step="1" placeholder="Valore Instalaciones/Instrumentos" data-translate="instalaciones-ph">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content item-input rflex px-05 mt-2">
+                  <div class="item-inner px-05">
+                    <div class="item-title">Comentario(s)</div>
+                    <div class="item-input-wrap iconinput input-group">
+                      <textarea name="comments" id="comments" cols="30" rows="30" placeholder="Valore Comentarios" data-translate="comments-ph"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content item-input rflex ">
+                  <button type="button" class="button button-app primary button-login zi-5 btn-agenda" id="btnSubmitQuality" @click="saveQuality">Agregar Valoración</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+
+</template>
+<script>
+  return {
+    on: {
+      pageAfterIn: function (event, page) {
+        var self = this;
+        app.data.currview = self;
+        $('#btnSubmitQuality').data('iddoctor', self.$route.params.iddoctor);
+      },
+    },
+    methods: {
+      goBack: function() {
+        app.loginScreen.close();
+        router.back();
+      },
+      saveQuality: function() {
+        var prloder = app.dialog.preloader('Enviando...');
+        solstar.ajaxRequest('valoration/save', 'POST', function(data) {
+            if(prloder)
+              prloder.close();
+            console.log('valoration/save', data)
+            if(data.success) {
+              app.dialog.alert('Enviado', function() {
+                app.loginScreen.close();
+                router.back();
+              });
+            } else {
+              app.dialog.alert(data.message);
+            }
+          }, {
+            iddoctor: $('#btnSubmitQuality').data('iddoctor'),
+            puntualidad: $('#puntualidad').val(),
+            atencion: $('#atencion').val(),
+            experiencia: $('#experiencia').val(),
+            apariencia: $('#apariencia').val(),
+            instalaciones: $('#instalaciones').val(),
+            comments: $('#comments').val(),
+          }, true, null, function(err, errtxt) {
+            if(prloder)
+              prloder.close();
+            app.dialog.alert('Ha Ocurrido un error');
+          }
+        );
+      },
+    }
+  }
+</script>

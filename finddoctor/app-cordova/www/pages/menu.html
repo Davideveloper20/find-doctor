@@ -1,0 +1,62 @@
+<template>
+	<div class="page">
+    <div class="page-content no-padding flexible column between bg-primary">
+      <div class="block text-align-center">
+        <!--<img src="img/logo.png" width="70px">-->
+      </div>
+      <div class="no-margin list no-hairlines">
+        <ul>
+          {{#each menu}}
+            <li class="">
+              <a href="{{url}}" data-popup="{{wpopup}}" class="tab-link {{external}} item-link panel-close {{popup}}">
+                <div class="item-content no-padding">
+                  <div class="item-inner">
+                    <div class="item-title text-color-white">
+                      <i class="{{faicon}}"></i> 
+                      {{title}}
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="list list-bottom no-hairlines">
+         <ul>
+          <li style="margin-top: 200px; margin-left: 15px;">
+            <a href="#" class="tab-link external item-link panel-close" @click="logout">
+              <div class="item-content no-padding">
+                <div class="item-inner">
+                  <div class="item-title">
+                    <i class="icon f7-icons ios-only">logout</i>
+                    <i class="icon material-icons md-only">exit_to_app</i> 
+                    Cerrar sesión
+                  </div>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+	</div>
+</template>
+<script>
+  return {
+    data: function () {
+      return {
+        user: solstar.getSession("username"),
+        nivel: solstar.getSession("nivel"),
+        menu: this.$root.menu
+      };
+    },
+    methods: {
+      logout: function()
+      {
+        localStorage.clear()
+        location.reload()
+      }
+    }
+  };
+</script>

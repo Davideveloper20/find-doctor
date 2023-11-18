@@ -1,0 +1,133 @@
+<template>
+  <div class="page no-toolbar no-navbar no-swipeback">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="f7-icons">chevron_left</i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">
+          <img src="assets/imgs/logo1.png" alt="Find Doctor">
+        </div>
+      </div>
+    </div>
+    <div class="page-content login-screen-content">
+      <div class="login-screen-title">
+        <div class="block text-align-center pagetitle rflex">
+          Registrarse como médico
+        </div>
+      </div>
+      <form id="form-medicregister" action="">
+        <div class="list">
+          <ul>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Nombre</div>
+                <div class="item-input-wrap iconinput">
+                  <!--i class="far fa-user fa-fw fahi"></i-->
+                  <input type="text" name="name" id="namesignupD" placeholder="Nombre Completo" data-translate="nombre-ph">
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Correo Electrónico</div>
+                <div class="item-input-wrap iconinput">
+                  <!--i class="far fa-envelope fa-fw fahi"></i-->
+                  <input type="email" name="emailsignupD" id="emailsignupD" placeholder="Correo Electrónico" data-translate="email-ph">
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Celular</div>
+                <div class="item-input-wrap iconinput">
+                  <!--i class="far fa-mobile fa-fw fahi"></i-->
+                  <input type="text" name="cellphone" id="cellphonesignupD" placeholder="Ingrese su Celular" data-translate="phone-ph">
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">ReTHUS</div>
+                <div class="item-input-wrap iconinput">
+                  <!--i class="far fa-mobile fa-fw fahi"></i-->
+                  <input type="text" name="rethus" id="rethussignupD" placeholder="Registro Único Nacional de Talente Humano en Salud" data-translate="phone-ph">
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Contraseña</div>
+                <div class="item-input-wrap iconinput">
+                  <!--i class="far fa-key fa-fw fahi"></i-->
+                  <input type="password" name="passwordsignupD" id="passwordsignupD" placeholder="Contraseña" data-translate="password-ph">
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="list zi-0">
+          <ul class="zi-5">
+            <li class="">
+              <button type="button" class="button button-app primary button-login zi-0" @click="signUpDoctor">
+                Registrarse
+              </button>
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function() {
+        solstar.initPhoneMaskEl('#cellphonesignupD');
+      }
+    },
+    methods: {
+      signUpDoctor: function () {
+        var $ = this.$;
+        var app = this.$app;
+        var router = this.$router;
+        var prloder = app.dialog.preloader('Registrando usuario');
+        solstar.ajaxRequest('auth/signUp', 'POST', function(data) {
+            if(prloder)
+              prloder.close();
+            if(data.success) {
+              solstar.setSession(solstar.params.sessionToken, data.token);
+              solstar.relocate(solstar.params.indexpage);
+            } else {
+              app.dialog.alert(data.message);
+            }
+          }, {
+            name: $('#namesignupD').val() || '',
+            user: $('#emailsignupD').val() || '',
+            password: $('#passwordsignupD').val() || '',
+            rethus: $('#rethussignupD').val() || '',
+            cellphone: $('#cellphonesignupD').val() || '',
+            profile: 2,
+          }, loader = true, progress=null, function(err, errtxt) {
+            if(prloder)
+              prloder.close();
+            if(err.data.responseJSON) {
+              console.log('Ha Ocurrido un error LOGINS', err);
+              app.dialog.alert(err.data.responseJSON.message || 'Ha Ocurrido un error');
+            } else {
+              console.log('Ha Ocurrido un error LOGINS', err);
+              app.dialog.alert('Ha Ocurrido un error');
+            }
+          }
+        );
+      }, 
+      goBack: function() {
+        app.loginScreen.close();
+        router.back();
+      }
+    }
+  }
+</script>

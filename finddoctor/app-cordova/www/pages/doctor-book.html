@@ -1,0 +1,239 @@
+<template>
+<div class="page">
+  <div class="navbar">
+	<div class="navbar-inner sliding">
+	  <div class="left rflex">
+		<a href="#" class="link back" >
+		  <i class="f7-icons">chevron_left</i>
+		  <span class="ios-only">Back</span>
+		</a>
+	  </div>
+	  <div class="title blue2 rflex zi-5" id="chatTitle">
+		
+	  </div>
+	  <div class="right rflex">
+		<img src="assets/imgs/icon.png" id="bd-profile-img" alt="Find Doctor" height="80px">
+	  </div>
+	</div>
+  </div>
+  
+  <div class="page-content login-screen-content home-content">
+	<div class="tabs myprofile">
+	  <div id="tab-1" class="page-content tab tab-active no-padding" id="">
+		<div class="list">
+		  <ul id="doctor-profile">
+			<li>
+			  <div class="item-content item-input rflex px-05 ">
+				<div class="item-inner px-05">
+				  <div class="item-title">Tipo de servicio</div>
+				   <div class="item-input-wrap iconinput input-group">
+						<select name="type" id="type" placeholder="Seleccione tipo de Servicio" data-translate="services-ph">
+							<option value="consultorio">En Consultorio</option>
+							<option value="domicilio">En Domicilio</option>
+						</select>
+				  </div>
+				  <br>
+				  <div class="item-title">Seleccione un servicio</div>
+				   <div class="item-input-wrap iconinput input-group">
+					<select name="services" id="services" placeholder="Seleccione el Servicio" data-translate="services-ph"></select>
+				  </div>
+				  <br>
+				  <div class="item-title">Fecha de Agenda</div>
+					<div class="item-input-wrap iconinput input-group" id>
+					  <input class="text-center" type="text" name="appointdate" id="appointdate" placeholder="Fecha de Agendamiento" readonly="" data-translate="appointdate-ph">
+					  <span class="input-group-addon input-group-append">
+						<span class="input-group-text" id="birthdate-addon">
+						  <i class="fas fa-calendar"></i>
+						</span>
+					  </span>
+					</div>
+				  <div class="item-input-wrap iconinput input-group sr-only hidden" id>
+					<input type="text" class="" name="duration" id="duration" placeholder="Seleccione duración el Servicio" data-translate="servicesduration-ph">
+				  </div>
+				  <br>
+				  <div id="cntavailable" class="">
+					<div class="item-title">Disponibilidad</div>
+					<div class="item-input-wrap iconinput input-group" id>
+					  <select class="" name="available" id="available" placeholder="Seleccione duración el Servicio" data-translate="servicesduration-ph"><option value="">No Hay Disponibilidad</option></select>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</li>
+			<li>
+			  <div class="item-input rflex ">
+				<button type="button" class="button button-app primary button-login zi-5 btn-agenda" id="btnSubmitAppoint" @click="saveAppoint">Agendar Cita</a>
+			  </div>
+			</li>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
+
+</template>
+<script>
+	
+  return {   
+	on: {
+	  pageInit: function () {
+		var self = this;
+	  },
+	  pageBeforeIn: function (event, page) {
+		var self = this;
+		
+	  },
+	  pageAfterIn: function (event, page) {
+		var self = this;
+		$('#btnSubmitAppoint').data('iddoctor', self.$route.params.iddoctor);
+		//solstar.initPhoneMaskEl('#cellphone');
+		//getDoctorProfile
+		/*solstar.ajaxRequest('getDoctorServices', 'POST', function(data) {
+			if(data.success) {
+			  $('#services').html('<option value="">Seleccione servicio</option>');
+			  $.each(data.data, function(index, val) {
+				 $('#services').append(`<option value="${val.id}" data-duration="${val.duration}">${val.item}</option>`);
+			  });
+			} else {
+			  app.dialog.alert(data.message);
+			}
+		  }, {
+			iddoctor: self.$route.params.iddoctor,
+			type: $('#type').val(),
+		  }, true, null, function(err, errtxt) {
+			app.dialog.alert('Ha Ocurrido un error');
+		  }
+		);*/
+		$('#type').on('change', function(evt) {
+			/*solstar.ajaxRequest('getDoctorServices', 'POST', function(data) {
+				if(data.success) {
+				  $('#services').html('<option value="">Seleccione servicio</option>');
+				  $.each(data.data, function(index, val) {
+					 $('#services').append(`<option value="${val.id}" data-duration="${val.duration}">${val.item}</option>`);
+				  });
+				} else {
+				  app.dialog.alert(data.message);
+				}
+			  }, {
+				iddoctor: self.$route.params.iddoctor,
+				type: $('#type').val(),
+			  }, true, null, function(err, errtxt) {
+				app.dialog.alert('Ha Ocurrido un error');
+			  }
+			);*/
+		});
+		$('#services').on('change', function(evt) {
+		  $('#duration').val($('option:selected', this).data('duration'));
+		  $('#duration').val($('option:selected', this).data('duration'));
+		});
+		/*solstar.ajaxRequest('getDoctorProfile', 'POST', function(data) {
+			console.log('getDoctorProfile', data);
+			if(data.success) {
+			  $('#bd-profile-img').attr('src', data.data.profileimage);
+			  $('#bd-profile-img').prop('src', data.data.profileimage);
+			  $('#chatTitle').html(`<b class="f1rem">${data.data.titulo} ${data.data.fullname}${(data.data.especiality && data.data.especiality.length > 0? '<br><small class="text-muted">&mdash;'+data.data.especiality+'</small>':'')}</b>`);
+			  //$('#doctor-profile .descr-profile').html(`${data.data.aboutme}<br>${data.data.enferme_trat}<br><address>${data.data.address}, ${data.data.city}, ${data.data.state}, ${data.data.country}<br>Celular: <a href="tel:${data.data.phonenumber}">${data.data.phonenumber}</a><br>Email: <a href="mailto:${data.data.email}">${data.data.email}</a></address>`);
+			} else {
+			  app.dialog.alert(data.message);
+			}
+		  }, {
+			iddoctor: self.$route.params.iddoctor
+		  }, true, null, function(err, errtxt) {
+			app.dialog.alert('Ha Ocurrido un error');
+		  }
+		);*/
+		$$('#logout').on('click', function() {
+		  solstar.unsetSession();
+		});
+		/*var calendarAppo = app.calendar.create({
+		  inputEl: '#appointdate',
+		  locale: 'es-419',
+		  firstDay: 0,
+		  openIn: 'popover',
+		  inputReadOnly: true,
+		  backdrop: true,
+		  toolbar: true,
+		  toolbarCloseText: 'Hecho',
+		  header: true,
+		  dateFormat: 'yyyy-mm-dd',
+		  minDate: moment().locale('es').format('YYYY-MM-DD'),
+		  //maxDate: moment().subtract(18, 'years').locale('es').format('YYYY-MM-DD'),
+		});*/
+
+		$('#appointdate, #services, #duration, #type').on('change', function(evt) {
+		  var $date = $('#appointdate').val(), $idserv=$('#services').data('id');
+		  if(!$('#cntavailable').hasClass('sr-only hidden')) {
+			$('#cntavailable').addClass('sr-only hidden');
+		  }
+		  if($date ==  '' || $idserv == '') {
+		  	return false;
+		  }
+		  $('#cntavailable #available').html('');
+		 /* solstar.ajaxRequest('appoiment/availability', 'POST', function(data) {
+			  if(data.success) {
+				console.log('appoiment/availability', data.data)
+				if($('#cntavailable').hasClass('sr-only hidden')) {
+				  $('#cntavailable').removeClass('sr-only hidden');
+				}
+				if(data.data.length > 0) {
+				  $('#cntavailable .item-title').html('Disponibilidad');
+				  $.each(data.data, function(index, val) {
+					 $('#cntavailable #available').append(`<option value="${moment(val.start).format('YYYY-MM-DD')}" data-value2="${moment(val.end).format('YYYY-MM-DD')}" data-start="${moment(val.start).format('HH:mm')}" data-end="${moment(val.end).format('HH:mm')}">${moment(val.start).format('hh:mm a')}</option>`);
+					 //$('#cntavailable #available').append(`<option value="${moment(val.start).format('YYYY-MM-DD')}" data-value2="${moment(val.end).format('YYYY-MM-DD')}" data-start="${moment(val.start).format('HH:mm')}" data-end="${moment(val.end).format('HH:mm')}">${moment(val.start).format('DD/MM/YYYY hh:mm a')} - ${moment(val.end).format('DD/MM/YYYY hh:mm a')}</option>`);
+				  });
+				} else {
+				  $('#cntavailable .item-title').html('No hay Disponibilidad, seleccione otra fecha');
+				}
+			  } else {
+				app.dialog.alert(data.message);
+			  }
+			}, {
+			  iddoctor: self.$route.params.iddoctor,
+			  idservice: $idserv,
+			  date: $date,
+			  duration: $('#duration').val(),
+			}, true, null, function(err, errtxt) {
+			  app.dialog.alert('Ha Ocurrido un error');
+			}
+		  );*/
+		});
+	  }
+	},
+	methods: {
+	  goBack: function() {
+		app.loginScreen.close();
+		router.back();
+	  },
+	  saveAppoint: function() {
+		var prloder = app.dialog.preloader('Agendando...');
+		var $date = $('#appointdate').val(), $idserv=$('#services').val();
+		solstar.ajaxRequest('/appoiment/save', 'POST', function(data) {
+			if(prloder)
+			  prloder.close();
+			console.log('/appoiment/save', data)
+			if(data.success) {
+			  app.dialog.alert('Agendado', function() {
+				app.loginScreen.close();
+				router.back();
+			  });
+			} else {
+			  app.dialog.alert(data.message);
+			}
+		  }, {
+			iddoctor: $('#btnSubmitAppoint').data('iddoctor'),
+			idservice: $idserv,
+			date: $date,
+			start_at: $('#available option:selected').data('start'),
+			end_at: $('#available option:selected').data('end'),
+			duration: $('#duration').val(),
+		  }, true, null, function(err, errtxt) {
+			if(prloder)
+			  prloder.close();
+			app.dialog.alert('Ha Ocurrido un error');
+		  }
+		);
+	  },
+	},
+  };   
+</script>

@@ -1,0 +1,87 @@
+<template>
+<div class="page">
+  <div class="navbar">
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="f7-icons">chevron_left</i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title">
+        <img src="assets/imgs/logo1.png" alt="Find Doctor">
+      </div>
+    </div>
+  </div>
+  <div class="page-content login-screen-content home-content">
+    <div class="tabs myprofile">
+      <div id="tab-1" class="page-content tab tab-active no-padding">
+        <div class="list">
+          <ul id="patien-appoints">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</template>
+<script>
+  return {   
+    on: {
+      pageInit: function () {
+        var self = this;
+      },
+      pageBeforeIn: function (event, page) {
+        var self = this;
+        
+      },
+      pageAfterIn: function (event, page) {
+        solstar.ajaxRequest(`getPatientAppoints/${btoa(solstar.Token)}`, 'POST', function(data) {
+            if(data.success) {
+              console.log('getPatientAppoints', data.data)
+              $.each(data.data, function(index, val) {
+                let html = '';
+                html+= `<li class="item-content px-05">`;
+                html+= `  <div class="item-inners px-05">`;
+                html+= `    <div class="item-title">${val.title}</div>`;
+                html+= `    <div class="item-icon rflex">`;
+                html+= `    <i class="fas fa-calendar-alt"></i>`;
+                html+= `    </div>`;
+                html+= `    <div class="item-detail">`;
+                html+= `      Fecha: ${moment(val.apment_date).format('DD/MM/YYYY')} ${moment(val.start_date).format('hh:mm a')} &mdash; ${moment(val.end_date).format('hh:mm a')}<br>`;
+                html+= `      Duración: ${val.duration} min(s)<br>`;
+                html+= `      Doctor: ${val.doctorname}&mdash;<small>${val.docespeciality}</small> <br>`;
+                html+= `      Dirección: ${val.doctoraddress} <small>${val.city}, ${val.state}, ${val.country}</small> <br>`;
+                html+= `      Estatus: <span style="color:${val.textColor}; background-color: ${val.color}; padding: 0.2rem; border-radius: 5px;float: right;">${val.status}</span><br>`;
+                html+= `      Detalles: <p>${val.details||''}</p><br>`;
+                html+= `    </div>`;
+                html+= `    <div class="item-actions rflex">`;
+                html+= `    <a href="https://waze.com/ul?q=${encodeURIComponent(val.doctoraddress+' '+val.city+' '+val.state+' '+val.country)}&z=8&navigate=yes&zom=8" class="button link external rflex"><i class="fab fa-waze"></i></a>`;
+                html+= `    <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(val.doctoraddress+' '+val.city+' '+val.state+' '+val.country)}&travelmode=transit&dir_action=navigate" class="button link external rflex"><i class="fas fa-map-marked-alt"></i></a>`;
+                html+= `    </div>`;
+                html+= `  </div>`;
+                html+= `</li>`;
+                $('#patien-appoints').append(html);
+              });
+            } else {
+              app.dialog.alert(data.message);
+            }
+          }, {}, true, null, function(err, errtxt) {
+            app.dialog.alert('Ha Ocurrido un error');
+          }
+        );//*/
+      }
+    },
+    methods: {
+      goBack: function() {
+        app.loginScreen.close();
+        router.back();
+      },
+      updProfile: function() {
+        var prloder = app.dialog.preloader('Guardando');
+      },
+    },
+  };
+</script>

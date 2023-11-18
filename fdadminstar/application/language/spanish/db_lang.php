@@ -1,0 +1,20 @@
+<?php
+$lang['msg_first_name'] = 'First Name';
+$lang['msg_last_name'] = 'Last Name';
+$lang['msg_dob'] = 'Date of Birth';
+$lang['msg_address'] = 'Address';
+$lang['msg_err_invalid_request'] = 'Tipo de solicitud inválida';
+$lang['msg_err_invalid_method'] = 'Método de solicitud inválida';
+$lang['msg_err_invalid_value'] = 'Dato inválido';
+$lang['msg_err_record_404'] = 'No se encontró el registro solicitado';
+$lang['msg_err_record_notmatch'] = 'Los datos no coinciden';
+$lang['profile'] = 'Perfil';
+$lang['hi'] = 'Hola';
+$lang['update_profile_msg1'] = 'Cambie o actualice su información en esta página.';
+$lang['edit_profile'] = 'Editar Perfil';
+$lang['my_goals'] = 'Mis Logros';
+$lang['goals'] = 'Logros';
+$lang['add'] = 'Agregar';
+$lang['no_goals'] = 'Sin logros registrados, por favor agregelos';
+$lang['email_exists'] = 'El correo elctrónico <b>Ya</b> existe!';
+$lang['email_dont_exists'] = 'El correo elctrónico <b>No</b> existe!';

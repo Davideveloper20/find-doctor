@@ -1,0 +1,102 @@
+<template>
+  <div class="page no-toolbar no-navbar no-swipeback">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="f7-icons">chevron_left</i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">
+          <img src="assets/imgs/logo1.png" alt="Find Doctor">
+        </div>
+      </div>
+    </div>
+    <div class="page-content login-screen-content">
+      <div class="login-screen-title">
+        <div class="block text-align-center pagetitle rflex">
+          Recuperar Contraseña
+        </div>
+      </div>
+      <div class="block text-align-center subtit">
+        Has olvidado tu contraseña, recuperala aquí
+      </div>
+      <form id="form-recoverP" action="">
+        <div class="list">
+          <ul>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Correo Electŕonico</div>
+                <div class="item-input-wrap iconinput">
+                  <i class="far fa-user fa-fw fahi"></i>
+                  <input type="email" name="email" id="emailrecoverP" placeholder="Correo electrónico" data-translate="email-ph">
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="list">
+          <ul>
+            <li>
+              <button type="button" class="button button-app primary button-login" @click="forgotPatient">
+                Recuperar
+              </button>
+            </li>
+          </ul>
+        </div>
+        <br>
+        <div class="list">
+          <ul>
+            <li>
+              <button type="button" class="button button-app primary button-recover back button-back" @click="goBack">
+                Ingresar
+              </button>
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    methods: {
+      forgotPatient: function () {
+        var $ = this.$;
+        var app = this.$app;
+        var router = this.$router;
+        var prloder = app.dialog.preloader('Recuperando');
+        solstar.ajaxRequest('auth/forgotPass', 'POST', function(data) {
+            if(prloder)
+              prloder.close();
+            if(data.success) {
+              //solstar.setSession(solstar.params.sessionToken, data.token);
+              //solstar.relocate(solstar.params.indexpage);
+              app.router.navigate('/');
+              console.log(data)
+            } else {
+              app.dialog.alert(data.message);
+            }
+          }, {
+            user: $('#emailrecoverP').val() || '',
+          }, true, null, function(err) {
+            if(prloder)
+              prloder.close();
+            if(err.data.responseJSON) {
+              console.log('Ha Ocurrido un error FORGOT', err);
+              app.dialog.alert(err.data.responseJSON.message || 'Ha Ocurrido un error');
+            } else {
+              console.log('Ha Ocurrido un error FORGOT', err);
+              app.dialog.alert('Ha Ocurrido un error');
+            }
+          }
+        );
+      }, 
+      goBack: function() {
+        app.loginScreen.close();
+        router.back();
+      }
+    }
+  }
+</script>

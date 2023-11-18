@@ -1,0 +1,313 @@
+<template>
+  <!--<div class="page no-toolbar no-navbar no-swipeback">-->
+
+    <div class="page">   
+
+    <div class="navbar bg-color-blue">
+      <div class="navbar-inner" style="left: 20px;">
+        <div class="left">
+          <a class="panel-open" href="#">
+            <i class="fas fa-bars"></i>
+          </a>
+        </div>
+        
+      </div>
+    </div>
+
+    
+    <div class="page-content login-screen-content pb-0">
+
+      
+      <div class="block">
+
+        
+        <div class="block-title text-align-left text-color-secondary title-font-18 mR">
+          Busca tu especialista
+        </div>
+        <form id="form-search" action="">
+          <div class="list no-hairlines">
+            <ul>
+              <li>
+                <div class="card shadow-card">
+                  <a class="item-link smart-select smart-select-init" data-searchbar="true" data-searchbar-placeholder="Ej: Médico internista">
+                    <select name="speciality" id="speciality" multiple>
+                      {{#each $root.specialists}}
+                        <option value="{{id}}">{{item}}</option>
+                      {{/each}}
+                    </select>
+                    <div class="item-content">
+                      <div class="item-inner rflex column content-start">
+                        <div class="item-title mR title-font-16">Selecciona la especialidad</div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </li>
+              <li>
+                <div class="card shadow-card">
+                  <a class="item-link smart-select smart-select-init" data-searchbar="true" data-searchbar-placeholder="Ej: Medellín">
+                    <select name="city" id="city">
+                      {{#each $root.defaultCity}}
+                        <option value="{{id}}">{{item}}</option>
+                      {{/each}}
+                      {{#each $root.cities}}
+                        <option value="{{id}}">{{item}}</option>
+                      {{/each}}
+                    </select>
+                    <div class="item-content">
+                      <div class="item-inner rflex column content-start">
+                        <div class="item-title title-font-16">Seleccione la ciudad</div>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="block text-align-center">
+            <div class="row">
+              <div class="col-40">
+                <button type="button" class="button button-app primary" @click="searchDoctors">
+                  Buscar
+                </button>
+              </div>
+              <div class="col-40 margin-y-auto">
+                <a href="#" class="item-link login-screen-open mM title-font-14" data-login-screen="#filtersSearch">
+                  Más filtros
+                </a>
+              </div>
+            </div>
+          </div>
+
+
+  
+
+
+          
+        </form>
+        <div class="list media-list infinite-scroll-content" data-infinite-distance="50" id="resultsSearch" @infinite="loadMore">
+          <ul id="medicLst">
+            {{#each partners}}
+              <li>
+                <div class="card shadow-md non-friendly card-plain">
+                  <div class="item-content shadow-lg">
+                    <div class="item-media" onclick="app.router.navigate('/doctor-detail/{{id_users}}')"><img src="{{image}}" alt="find doctor {{fullname}}"/></div>
+                    <div class="item-inner">
+                      <div class="item-title-row">
+                        <div class="item-title mB">{{fullname}}</div>
+                        <div class="item-after padding-right">4.5 <i class="fas fa-star"></i></div>
+                      </div>
+                      <div class="item-subtitle">$5000 - $10000</div>
+                      <div class="item-text">{{business_address}}</div>
+                      <div class="item-text">
+                        <div class="row">
+                          <div class="col rflex">
+                            <button class="button button-app primary fit-button no-margin">
+                              <i class="fas fa-messages"></i>
+                            </button>
+                            <button class="button button-app primary fit-button margin-left">
+                              <i class="fas fa-video-camera"></i>
+                            </button>
+                          </div>
+                          <div class="col">
+                            <button class="button button-app primary fit-button no-margin">Agenda</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <!-- <li class="item-content item-input rflex medic">
+                <div class="item-inner shadow-lg">
+                  <div class="img-profile">
+                    <a href="" ></a>
+                  </div>
+                  <div class="name-doc">{{business_category}} </div>
+                  <div class="rating-doc {{fwrating}} rflex">{{rating}}<i class="material-icons dorado">star</i></div>
+                  <div class="address-doc"> {{city}} {{state}} {{country}}</div>
+                  <div class="pricerange-doc">{{rangeprice}}</div>
+                  <div class="controls-doc">
+                    
+                  </div>
+                </div>
+              </li> -->
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    
+
+
+
+
+
+    <div class="login-screen" id="filtersSearch">
+      <div class="page login-screen-content">
+        <div class="navbar">
+          <div class="navbar-inner sliding">
+            <div class="left">
+              <a href="#" class="link login-screen-close">
+                <i class="f7-icons">chevron_left</i>
+                <span class="ios-only">Back</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="block-title text-align-center no-margin-bottom">
+            Filtros de Busqueda
+          </div>
+          <div class="list no-hairlines no-margin-top">
+            <ul>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <input type="text" name="keywords" id="keywords" placeholder="Palabra clave" data-translate="keywords-ph">
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <input type="text" name="enfermedades" id="enfermedades" placeholder="Enfermedades" data-translate="enfermedades-ph">
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <input type="text" name="servicios" id="servicios" placeholder="Buscar servicio" data-translate="servicios-ph">
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <input type="text" name="consultorio" id="consultorio" placeholder="Buscar consultorio" data-translate="consultorio-ph">
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                    <input type="text" name="epseguro" id="epseguro" placeholder="Buscar EPS/Seguro" data-translate="epseguro-ph">
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-media">
+                    <div class="item-title">Rating</div>
+                  </div>
+                  <div class="item-inner">
+                    <input type="number" min="0" max="5" step="1" name="rating" id="rating" placeholder="Seleccione calificación" data-translate="rating-ph">
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-media">
+                    <div class="item-title">Med. Prepagada</div>
+                  </div>
+                  <div class="item-inner">
+                    <select name="prepaid" id="prepaid">
+                      <option value="-1">Todos</option>
+                      <option value="1">Si</option>
+                      <option value="0">No</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-media">
+                    <div class="item-title">Orden</div>
+                  </div>
+                  <div class="item-inner">
+                    <select name="orden" id="orden">
+                      <option value="rating">Valoración</option>
+                      <option value="recomended">Recomendado</option>
+                      <option value="chat">Chat</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="item-content">
+                  <div class="item-media">
+                    <div class="item-title">Sexo</div>
+                  </div>
+                  <div class="item-inner">
+                    <select name="gender" id="gender">
+                      <option value="-1">Todos</option>
+                      <option value="1">Masculino</option>
+                      <option value="2">Femenino</option>
+                    </select>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="block text-align-center">
+            <button type="button" class="button button-app primary login-screen-close" @click="searchDoctors">
+              Filtrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function()
+      {
+
+      }
+    },
+    methods: {
+      loadMore: function () {
+        var self = this;
+        var $ = self.$$;
+        app.methods.searchDoctor(false);
+      },
+      searchFilters: function() {
+        app.data.lgs = app.loginScreen.create({ el:$('#filtersSearch'), aniamte:true});
+        app.data.lgs.open();
+      },
+      closeFilters: function() {
+        if(app.data.lgs) {
+          app.data.lgs.close();
+        }
+      },
+      calcHeight: function() {
+        console.log('resultHead', $('#resultHead').height());
+        console.log('toolbarBottom', $('#toolbarBottom').height());
+        console.log('resultHead', $('#resultHead').is(':visible'))
+      },
+      searchDoctors: function() {
+
+        app.data.search = {
+          idcity: $('#city').val(),
+          speciality: $('#speciality').val(),
+          text: $('#filtersSearch #keywords').val(),
+          disease: $('#filtersSearch #enfermedades').val() || '',
+          services: $('#filtersSearch #servicios').val() || '',
+          cunsultingroom: $('#filtersSearch #consultorio').val() || '',
+          epseguro: $('#filtersSearch #epseguro').val() || '',
+          rating: $('#filtersSearch #rating').val() || '',
+          order: $('#filtersSearch #orden').val() || '',
+          prepaid: $('#filtersSearch #prepaid').val() || '',
+          gender: $('#filtersSearch #gender').val() || '',
+        }
+
+        app.router.navigate('/search');
+      },
+    }
+  };
+</script>

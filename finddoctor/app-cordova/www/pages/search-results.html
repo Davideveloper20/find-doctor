@@ -1,0 +1,114 @@
+<template>
+<div class="page">
+  <div class="navbar wallet-nav">
+    <div class="navbar-bg"></div>
+    <div class="navbar-inner">
+        <div class="title">
+          <a href="/" class="row">
+            <label class="rect4 rflex" id="wallCycl">
+              <small class=""></small>
+              <span >0 Cyclos</span>          
+            </label>
+          </a>
+        </div>
+        <div class="right">
+          <a href="/profile" class="row">
+            <label class="user-icon">
+              <i class="fa fa-user-circle"></i>
+            </label>
+          </a>
+        </div>
+        <!--div class="block text-align-center rflex">            
+        </div-->
+    </div>
+    <div class="navbar-inner-sec rflex">
+      <!--div class="block text-align-center pagetitle rflex">
+        Mis Comercios
+      </div-->
+      <div class="block text-align-center rflex">
+        <p class="aviso">Selecciona la tienda y scanea el código del recibo para pagar</p>
+        <div class="col-lg-12 rflex searchCnt">
+          <input type="text" class="search" name="searchShop" id="searchShop">
+          <a href="#" class="searchBtn"><i class="fas fa-search"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-content login-screen-content home-content">
+    <div class="tabs-animated-wrap">
+      <div class="tabs myshops">
+        <div class="list shops">
+          <ul id="shopsLst">
+          </ul>
+          <div>
+            <button type="button" class="button button-app button-loadmore" data-value="load" id="loadshops"><i class="fas fa-sync"></i> Cargar Más</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</template>
+<script>
+  return {  
+    on: {
+      pageInit: function () {
+        var self = this;
+      },
+      pageAfterIn: function (event, page) {
+        // do something after page gets into the view
+        //this.data()
+        app.data.scrolls = 0;
+        app.methods.updateCyclos();
+        app.methods.loadShops(0);
+        $('.home-content .tabbar .toolbar-inner .tab-link').off('click').on('click', function(evt) {
+          var $this = $(this);
+          $('.home-content .tabbar .toolbar-inner .tab-link').removeClass('tab-link-active');
+          $this.addClass('tab-link-active');
+          $('.home-content .tabs .tab').removeClass('tab-active');
+          $($this.attr('href'), '.home-content .tabs').addClass('tab-active');
+          if($this.attr('href') == '#tab-1') {
+            $('.home-content .tabbar .tab-link-highlight').css({
+              transform: 'translate3d(0%, 0px, 0px)',
+            });
+          } else {
+            $('.home-content .tabbar .tab-link-highlight').css({
+              transform: 'translate3d(100%, 0px, 0px)',
+            });
+          }
+        });
+
+        $('#loadshops').off('click').on('click', function(evt) {
+          app.methods.loadShops(app.data.scrolls);
+        });
+
+        $('#searchBtn').off('click').on('click', function(evt) {
+          var $val = $('#searchShop').val() || '';
+          $('#shopsLst').html('');
+          app.data.scrolls = 0;
+          if($val.length == 0) {
+            $('#loadshops').attr('disabled', false);
+            $('#loadshops').fadeIn('swing');
+            app.methods.loadShops(app.data.scrolls);
+          } else {
+            app.methods.searchShops($val); 
+          }
+        });
+
+        $('#searchShop').on('change', function(evt) {
+          var $val = $('#searchShop').val() || '';
+          $('#shopsLst').html('');
+          app.data.scrolls = 0;
+          if($val.length == 0) {
+            $('#loadshops').attr('disabled', false);
+            $('#loadshops').fadeIn('swing');
+            app.methods.loadShops(app.data.scrolls);
+          } else {
+            app.methods.searchShops($val); 
+          }
+        });
+      }
+    },
+  };
+</script>

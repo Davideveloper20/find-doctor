@@ -1,0 +1,313 @@
+<template>
+  <div class="page no-toolbar no-navbar no-swipeback result-doctors">
+    <div class="page-content login-screen-content pb-0">
+      <div class="login-screen-title" id="resultHead" style="{{hidehead}}">
+        <div class="block text-align-center mt-30">
+          <img src="assets/imgs/logo1.png" alt="Find Doctor">
+        </div>
+        <div class="block text-align-center subtit">
+          Bienvenido a su directorio de especialistas
+        </div>
+      </div>
+      <div id="tab-results" class="page-content tab tab-active no-padding ptr-bottom" style="overflow: hidden; {{tarresulth}}">
+        <form id="form-search" action="">
+          <div class="list">
+            <ul>
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-input-wrap iconinput">
+                    <input type="text" name="speciality" id="speciality" placeholder="Buscar especialidad" data-translate="speciality-ph">
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input">
+                <div class="item-inner">
+                  <div class="item-input-wrap iconinput">
+                    <input type="text" name="city" id="city" placeholder="Buscar ciudad" data-translate="city-ph">
+                  </div>
+                </div>
+              </li>
+              <li class="item-content item-input">
+                <button type="button" class="button button-app primary button-search col-lg-6" @click="searchDoctors">
+                  Buscar
+                </button>
+                <a href="#" class="item-link item-inner col-lg-4 pull-right" @click="searchFilters">
+                  <div class="item-title">Más filtros</div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </form>
+        <div class="mt-30 list infinite-scroll-content" data-infinite-distance="50" id="resultsSearch" @infinite="loadMore" style="padding-bottom: 60px; {{tarresultsea}}">
+          <ul id="medicLst">
+            {{#each doctores}}
+            <li class="item-content item-input rflex medic">
+              <div class="item-inner">
+                <div class="img-profile">
+                  <a href="/doctor-detail/{{iddoctor}}" ><img src="{{profileimage}}" alt="find doctor {{fullname}}"/></a>
+                </div>
+                <div class="name-doc">{{titulo}} {{fullname}}</div>
+                <div class="rating-doc {{fwrating}} rflex">{{rating}}<i class="material-icons dorado">star</i></div>
+                <div class="address-doc">{{address}} {{city}} {{state}} {{country}}</div>
+                <div class="pricerange-doc">{{rangeprice}}</div>
+                <div class="controls-doc">
+                  <a href="/doctor-detail/{{iddoctor}}" data-id="{{iddoctor}}" type="button" class="button btnMedDetails btn-action"><i class="far fa-list-alt"></i> Ver Detalles</a>
+                  {{#if chat_activo}}
+                    <a href="/doctor-chat/{{iddoctor}}" data-id="{{iddoctor}}" type="button" class="button btnMedChat btn-action"><i class="fas fa-comments"></i></a>
+                  {{/if}}
+                  <a href="/doctor-book/{{iddoctor}}" data-id="{{iddoctor}}" type="button" class="button btn-agenda"> Agenda </a>
+                </div>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="login-screen" id="filtersSearch">
+      <div class="page login-screen-content search-filters">
+        <div class="navbar">
+          <div class="navbar-inner sliding">
+            <div class="left">
+              <a href="#" class="link" @click="closeFilters">
+                <i class="f7-icons">chevron_left</i>
+                <span class="ios-only">Back</span>
+              </a>
+            </div>
+            <div class="title">
+              <img src="assets/imgs/icon.png" alt="Find Doctor">
+            </div>
+            <div class="title">
+              <div class="block text-align-center rflex">
+                Filtros de Busqueda
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--div class="login-screen-title">
+          <div class="block text-align-center pagetitle rflex">
+            Filtros de Busqueda
+          </div>
+        </div-->
+        <div class="list">
+          <ul>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-input-wrap iconinput">
+                    <input type="text" name="keywords" id="keywords" placeholder="Palabra clave" data-translate="keywords-ph">
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <div class="item-input-wrap iconinput">
+                    <input type="text" name="enfermedades" id="enfermedades" placeholder="Enfermedades" data-translate="enfermedades-ph">
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <input type="text" name="servicios" id="servicios" placeholder="Buscar servicio" data-translate="servicios-ph">
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <input type="text" name="consultorio" id="consultorio" placeholder="Buscar consultorio" data-translate="consultorio-ph">
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-inner">
+                  <input type="text" name="epseguro" id="epseguro" placeholder="Buscar EPS/Seguro" data-translate="epseguro-ph">
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-media">
+                  <div class="item-title">Rating</div>
+                </div>
+                <div class="item-inner">
+                  <input type="number" min="0" max="5" step="1" name="rating" id="rating" placeholder="Seleccione calificación" data-translate="rating-ph">
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-media">
+                  <div class="item-title">Med. Prepagada</div>
+                </div>
+                <div class="item-inner">
+                  <select name="prepaid" id="prepaid">
+                    <option value="-1">Todos</option>
+                    <option value="1">Si</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-media">
+                  <div class="item-title">Orden</div>
+                </div>
+                <div class="item-inner">
+                  <select name="orden" id="orden">
+                    <option value="rating">Valoración</option>
+                    <option value="recomended">Recomendado</option>
+                    <option value="chat">Chat</option>
+                  </select>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-media">
+                  <div class="item-title">Sexo</div>
+                </div>
+                <div class="item-inner">
+                  <select name="gender" id="gender">
+                    <option value="-1">Todos</option>
+                    <option value="1">Masculino</option>
+                    <option value="2">Femenino</option>
+                  </select>
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <button type="button" class="button button-app primary button-search col-lg-9 back" @click="searchDoctors">
+                Filtrar
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</template>
+<script>
+  return {
+    data: function () {
+      var doctors = this.doctors || [];
+      doctors.forEach(function(doctor){
+        doctor.fwrating = (parseInt(doctor.rating)+1)*100;
+        doctor.rating = parseFloat(doctor.rating).toFixed(1);
+        doctor.rangeprice = ((doctor.min_serv && doctor.min_serv >0) ? '$'+numeral(doctor.min_serv).format('0,0.00'):'')+((doctor.max_serv && doctor.min_serv >0) ? ((doctor.min_serv && doctor.min_serv >0?' &mdash; ':'')+'$'+numeral(doctor.max_serv).format('0,0.00')):'');
+      });
+      return {
+        doctores: doctors,
+        tarresulth:this.tarresulth || '',
+        tarresultsea:this.tarresultsea || '',
+        hidehead:this.hidehead||'',
+      }
+    },
+    on: {
+      pageInit: function (event, page) {
+        console.log('pageAfterIn');
+        $.getScript('https://get.geojs.io/v1/ip/geo.js?callback=app.methods.geoip');
+        var self = this;
+        app.data.currview = self;
+        solstar.ajaxRequest('listConsultorios', 'POST', function(data) {
+            if(data.success) {
+              solstar.autocomplete($('#consultorio')[0], data.data, null, function(item) {
+                $('#consultorio').data('id', item.id);
+              });
+            } else {
+              app.dialog.alert(data.message);
+            }
+          }, {}, true, null, function(err, errtxt) {
+            app.dialog.alert('Ha Ocurrido un error');
+          }
+        );
+
+        solstar.ajaxRequest('listEpsSeguros', 'POST', function(data) {
+            if(data.success) {
+              solstar.autocomplete($('#epseguro')[0], data.data, null, function(item) {
+                $('#epseguro').data('id', item.id);
+              });
+            } else {
+              app.dialog.alert(data.message);
+            }
+          }, {}, true, null, function(err, errtxt) {
+            app.dialog.alert('Ha Ocurrido un error');
+          }
+        );
+
+        solstar.ajaxRequest('listServices2', 'POST', function(data) {
+            if(data.success) {
+              solstar.autocomplete($('#servicios')[0], data.data, null, function(item) {
+                $('#servicios').data('id', item.id);
+              });
+            } else {
+              app.dialog.alert(data.message);
+            }
+          }, {}, true, null, function(err, errtxt) {
+            app.dialog.alert('Ha Ocurrido un error');
+          }
+        );
+
+        solstar.ajaxRequest('listSpecialty', 'POST', function(data) {
+            if(data.success) {
+              solstar.autocomplete($('#speciality')[0], data.data, null, function(item) {
+                $('#speciality').data('id', item.id);
+              });
+            } else {
+              app.dialog.alert(data.message);
+            }
+          }, {}, true, null, function(err, errtxt) {
+            app.dialog.alert('Ha Ocurrido un error');
+          }
+        );
+
+        solstar.ajaxRequest('listCities', 'POST', function(data) {
+            if(data.success) {
+              solstar.autocomplete($('#city')[0], data.data,null, function(item) {
+                $('#city').data('id', item.id);
+              });
+            } else {
+              app.dialog.alert(data.message);
+            }
+          }, {}, true, null, function(err, errtxt) {
+            app.dialog.alert('Ha Ocurrido un error');
+          }
+        );
+        
+      }
+    },
+    methods: {
+      loadMore: function () {
+        var self = this;
+        var $ = self.$$;
+        app.methods.searchDoctor(false);
+      },
+      searchFilters: function() {
+        app.data.lgs = app.loginScreen.create({ el:$('#filtersSearch'), aniamte:true});
+        app.data.lgs.open();
+      },
+      closeFilters: function() {
+        if(app.data.lgs) {
+          app.data.lgs.close();
+        }
+      },
+      calcHeight: function() {
+        console.log('resultHead', $('#resultHead').height());
+        console.log('toolbarBottom', $('#toolbarBottom').height());
+        console.log('resultHead', $('#resultHead').is(':visible'))
+      },
+      searchDoctors: function() {
+        console.log('searchDoctors', $('#city').val(), $('#speciality').val());
+        $('#resultsSearch #medicLst').html('');
+        app.methods.searchDoctor(true);
+      },
+    }
+  }
+</script>

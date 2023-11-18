@@ -1,0 +1,314 @@
+<template>
+    <div class="page">
+      <div class="navbar">
+        <div class="navbar-inner sliding">
+          <div class="left">
+            <a href="#" class="link back">
+              <i class="f7-icons">chevron_left</i>
+              <span class="ios-only">Back</span>
+            </a>
+            <!-- <img src="img/logo_f.jpg" style="width: 50%;" alt="Find Doctor"> -->
+          </div>
+          <div class="title">
+          </div>
+          <div class="right">
+            <a href="#" class="link" @click="logOut">
+              <i class="fas fa-sign-out-alt fa-fw fa-2x"></i><small class="hidden-xs">Cerrar Sesión</small>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="page-content login-screen-content home-content">
+        <div class="login-screen-title">
+          <div class="toolbar tabbar">
+            <div class="toolbar-inner">
+              <a href="#tab-1" class="tab-link tab-link-active">Perfil</a>
+              <a href="#tab-2" class="tab-link">Datos</a>
+            </div>
+          </div>
+        </div>
+        <div class="tabs-animated-wrap myprofile">
+          <div class="tabs myprofile" id="form-profile">
+              <div id="tab-1" class="page-content tab tab-active no-padding">
+                <div class="list">
+                  <ul>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-input-wrap iconinput">
+                          <i class="far fa-user fa-fw fahi"></i>
+                          <input type="text" name="name" placeholder="Nombre Completo" data-translate="nombre-ph">
+                        </div>
+                      </div>
+                    </li>
+                    <!--li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-input-wrap iconinput">
+                          <i class="far fa-envelope fa-fw fahi"></i>
+                          <input type="email" name="emailsignup" placeholder="Correo Electrónico" data-translate="email-ph">
+                        </div>
+                      </div>
+                    </li-->
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-input-wrap iconinput">
+                          <!--<i class="far fa-mobile fa-fw fahi"></i>-->
+                          <i class="fa fa-mobile fa-fw fahi"></i>
+                          
+                          <input type="text" name="cellphone" id="cellphone" placeholder="Ingrese su teléfono" data-translate="phone-ph">
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-input-wrap iconinput">
+                          <i class="fa fa-location-arrow fa-fw fahi"></i>
+                          <input type="text" name="procity" id="procity" placeholder="Seleccione su ciudad" data-translate="phone-ph">
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title">Dirección</div>
+                        <div class="item-input-wrap iconinput">
+                          <input type="text" name="address" id="address" placeholder="Dirección" data-translate="address-ph">
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title">Genero</div>
+                        <div class="item-input-wrap iconinput">
+                          <select name="gender" id="gender" placeholder="Seleccione su genero" data-translate="gender-ph">
+                            <option value="0">Masculino</option>
+                            <option value="1">Femenino</option>
+                          </select>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div id="tab-2" class="page-content tab no-padding">
+                <div class="list">
+                  <ul>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title">Tipo de Documento</div>
+                        <div class="item-input-wrap iconinput">
+                          <!-- <input type="text" name="doc_type" id="doctypes" placeholder="Tipo de Documento" data-translate="doc_type-ph"> -->
+                        
+                          <select name="doc_type" id="doc_type" placeholder="Seleccione Tipo de documento" data-translate="doc_type-ph">
+                            <option value="1">Cédula de Ciudadanía</option>
+                            <option value="2">Cédula de extranjería</option>
+                            <option value="3">Pasaporte</option>
+                          </select>
+
+
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title">Documento</div>
+                        <div class="item-input-wrap iconinput">
+                          <input type="text" name="document" id="document" placeholder="Documento" data-translate="document-ph">
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-title">Fecha de Nacimiento</div>
+                        <div class="item-input-wrap iconinput input-group date" id="birthdate_cnt">
+                          <input class="text-center" type="text" name="birthdate" id="birthdate" placeholder="Fecha de Nacimiento" readonly="" data-translate="birthdate-ph">
+                          <span class="input-group-addon input-group-append">
+                            <span class="input-group-text" id="birthdate-addon">
+                              <i class="fas fa-calendar"></i>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="item-content item-input">
+                      <label class="item-checkbox item-content">
+                        <div class="item-inner">
+                          <div class="item-title">Poseo Medicina prepagada</div>
+                        </div>
+                        <input type="checkbox" name="med_prepagado" value="Books"/>
+                        <i class="icon icon-checkbox"></i>
+                      </label>
+                    </li>
+                    <li class="item-content item-input" id="epsseguro_cnt">
+                      <div class="item-inner">
+                        <div class="item-title">EPS Prepagada</div>
+                        <div class="item-input-wrap iconinput">
+                          <!-- <input type="text" name="epsseguro" id="epsseguro" placeholder="Seleccione su EPS" data-translate="epsseguro-ph"> -->
+                        
+                          <select name="epsseguro" id="epsseguro" placeholder="Seleccionesu Eps" data-translate="epsseguro-ph">
+                            <option value="1">Medimás</option>
+                            <option value="2">Sura</option>
+                            <option value="3">Savia Salud</option>
+                          </select>
+                        
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="block list zi-5 w100" style="bottom: 0.5rem;max-width: unset;">
+          <ul class="zi-5">
+            <li class="item-content">
+              <button type="button" class="button button-app primary button-login zi-5" @click="updProfile">
+                Actualizar
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    </template>
+    <script>
+      return {   
+        on: {
+          pageInit: function () {
+            var self = this;
+          },
+          /*pageBeforeIn: function (event, page) {
+            var self = this;
+            solstar.ajaxRequest('typeDocs', 'POST', function(data) {
+                if(data.success) {
+                  solstar.autocomplete($('#doctypes')[0], data.data, null, function(obj) {
+                    $('#doctypes').data('id', obj.id);
+                  });
+                } else {
+                  app.dialog.alert(data.message);
+                }
+              }, {}, true, null, function(err, errtxt) {
+                app.dialog.alert('Ha Ocurrido un error');
+              }
+            );
+            solstar.ajaxRequest('EpsSeguros', 'POST', function(data) {
+                if(data.success) {
+                  solstar.autocomplete($('#epsseguro')[0], data.data, null, function(obj) {
+                    console.log('d', obj);
+                    $('#epsseguro').data('id', obj.id);
+                  });
+                } else {
+                  app.dialog.alert(data.message);
+                }
+              }, {}, true, null, function(err, errtxt) {
+                app.dialog.alert('Ha Ocurrido un error');
+              }
+            );
+            solstar.ajaxRequest('listCities', 'POST', function(data) {
+                if(data.success) {
+                  solstar.autocomplete($('#procity')[0], data.data, null, function(obj) {
+                    console.log('d', obj);
+                    $('#procity').data('id', obj.id);
+                  });
+                } else {
+                  app.dialog.alert(data.message);
+                }
+              }, {}, true, null, function(err, errtxt) {
+                app.dialog.alert('Ha Ocurrido un error');
+              }
+            );
+          },*/
+          pageAfterIn: function (event, page) {
+            solstar.initPhoneMaskEl('#cellphone');
+            $$('#logout').on('click', function() {
+              solstar.unsetSession();
+            });
+            $('#form-profile input[name=med_prepagado]').on('change', function(evt) {
+              if(this.checked) {
+                $('#form-profile #epsseguro_cnt').fadeIn('fast');
+              } else {
+                $('#form-profile #epsseguro_cnt').fadeOut('fast');
+              }
+            });
+            $('#form-profile input[name=name]').val(app.data.user.fullname);
+            $('#form-profile input[name=emailsignup]').val(app.data.user.email);
+            $('#form-profile input[name=cellphone]').val(app.data.user.phonenumber);
+            $('#form-profile #address').val(app.data.user.address);
+            $('#form-profile #gender').val(app.data.user.gender);
+            //$("#form-profile #gender option[value='"+ app.data.user.gender +"']").attr("selected",true);
+            //$('#form-profile #procity').val(app.data.user.city+', '+app.data.user.state);
+            //$('#form-profile #procity').data('id', app.data.user.idcity);
+            $('#form-profile #procity').val(app.data.user.namecity);
+            //$('#form-profile #epsseguro').val(app.data.user.seguroeps);
+            $('#form-profile #epsseguro').val(app.data.user.ideps);
+            //$('#form-profile #epsseguro').data('id', app.data.user.ideps);
+            $('#form-profile #doctypes').val(app.data.user.appdoctype);
+            //$('#form-profile #doctypes').val(app.data.user.appdocname);
+            $('#form-profile #document').val(app.data.user.appdocument);
+            //$('#form-profile #birthdate').val(moment(app.data.user.birthdate).locale('es').format('YYYY-MM-DD') );
+            $('#form-profile #birthdate').val(app.data.user.birthdate);
+            //$('#form-profile #doctypes').data('id',app.data.user.appdoctype);            
+            $('#form-profile input[name=med_prepagado]').attr('checked', (app.data.user.med_prepagado == 0 ? false : true));
+            if(app.data.user.med_prepagado == 0) {
+              $('#form-profile #epsseguro_cnt').fadeOut('fast');
+            } else {
+              $('#form-profile #epsseguro_cnt').fadeIn('fast');
+              $('#form-profile #epsseguro').val();
+            }
+            var nowD = new Date();
+            //var minD = new Date([nowD.getFullYear()-100, nowD.getMonth(), 1]);
+            //var maxD = new Date([nowD.getFullYear()-19, nowD.getMonth(), 1]);
+            //console.log(nowD, minD, maxD);
+            var calendarBirth = app.calendar.create({
+              inputEl: '#birthdate',
+              locale: 'es-419',
+              firstDay: 0,
+              openIn: 'popover',
+              inputReadOnly: true,
+              backdrop: true,
+              toolbar: true,
+              toolbarCloseText: 'Hecho',
+              header: true,
+              dateFormat: 'yyyy-mm-dd',
+              //minDate: moment().subtract(100, 'years').locale('es').format('YYYY-MM-DD'),
+              //maxDate: moment().subtract(18, 'years').locale('es').format('YYYY-MM-DD'),
+            });
+          }
+        },
+        methods: {
+          logOut: function() {
+            solstar.unsetSession();
+          },
+          goBack: function() {
+            app.loginScreen.close();
+            router.back();
+          },
+          updProfile: function() {
+            var prloder = app.dialog.preloader('Guardando');
+            solstar.ajaxRequest('auth/updatePatient', 'POST', function(data) {
+              if(prloder)
+                prloder.close();
+              if(data.success) {
+              } else {
+                app.dialog.alert(data.message);
+              }
+            }, {
+              fullname: $('#form-profile input[name=name]').val(),
+              //email: $('#form-profile input[name=emailsignup]').val(),
+              phonenumber: $('#form-profile input[name=cellphone]').val(),
+              med_prepagado: $('#form-profile input[name=med_prepagado]').is(':checked') ? '1' : '0',
+              doc_type: $('#form-profile input[name=doc_type]').data('id'),
+              document: $('#form-profile input[name=document]').val(),
+              ideps: $('#form-profile #epsseguro').data('id'),
+              idcity: $('#form-profile #procity').data('id'),
+              address: $('#form-profile #address').val(),
+              gender: $('#form-profile #gender').val(),
+              birthdate: $('#form-profile #birthdate').val(),
+            }, loader = true, progress=null, function(err, errtxt) {
+              if(prloder)
+                prloder.close();
+              app.dialog.alert('Ha Ocurrido un error');
+            });
+          },
+        },
+      };
+    </script>

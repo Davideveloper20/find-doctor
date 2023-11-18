@@ -1,0 +1,218 @@
+<template>
+  <div class="page no-toolbar no-navbar no-swipeback" style="height: 100% !important;">
+    <div class="page loginContent">
+      <div class="page-content login-screen-content">
+        <div class="block text-align-center margin-bottom">
+          <img src="img/logo1.png" alt="Find Doctor" width="200">
+        </div>
+        <div class="login-screen-title no-margin-top">
+          <div class="row">
+            <div class="title-font-16 text-align-center col-55 mR margin-x-auto">
+              Bienvenido a su directorio <br> de especialistas
+            </div>
+          </div>
+        </div>
+        <div class="toolbar tabbar bg-color-white no-after" style="height: 36px;width: 80%;margin: auto;">
+          <div class="toolbar-inner" style="justify-content: space-around;">
+            <a href="#tab-1" class="tab-link">Regístrate</a>
+            <a href="#tab-2" class="tab-link tab-link-active">Ingresa</a>
+          </div>
+        </div>
+        <div class="tabs" style="height: calc(100% - (138px));">
+          <div id="tab-2" class="page-content tab tab-active padding-top padding-horizontal">
+            <form id="form-login" action="" class="">
+              <div class="list no-margin-top">
+                <ul>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Correo electrónico</div>
+                      <div class="item-input-wrap iconinput">
+                        <!--i class="far fa-user fa-fw fahi"></i-->
+                        <input type="email" name="email" id="emailloginP" placeholder="Escribe aquí..." data-translate="email-ph">
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Contraseña</div>
+                      <div class="item-input-wrap iconinput">
+                        <!--i class="far fa-key fa-fw fahi"></i-->
+                        <input type="password" name="password" id="passwordloginP" placeholder="Escribe aquí..." data-translate="password-ph">
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="block padding-horizontal">
+                <button type="button" class="button button-app primary button-login" @click="signInPatient">
+                  Ingresar
+                </button>
+              </div>
+            </form>
+            <div class="block text-align-center">
+              <a href="/forgot-patient/" class="button button-app button-recover">Olvide mi contraseña</a>
+            </div>
+          </div>
+          <div id="tab-1" class="page-content tab padding-top padding-horizontal">
+            <form id="form-reg" action="">
+              <div class="list no-margin-top">
+                <ul>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Nombre</div>
+                      <div class="item-input-wrap iconinput">
+                        <!--i class="far fa-user fa-fw fahi"></i-->
+                        <input type="text" name="nombre" id="namesignupP" placeholder="Escribe aqui.." data-translate="nombre-ph">
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Correo Electrónico</div>
+                      <div class="item-input-wrap iconinput">
+                        <!--i class="far fa-envelope fa-fw fahi"></i-->
+                        <input type="email" name="correo" id="emailsignupP" placeholder="Escribe aqui..." data-translate="email-ph">
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+
+                      <div class="item-title item-label">Contraseña</div>
+                      <div class="item-input-wrap iconinput">
+                        <!--i class="far fa-key fa-fw fahi"></i-->
+                        <input type="password" name="clave" id="passwordsignupP" placeholder="Escribe aqui..." data-translate="password-ph">
+                      </div>
+                    </div>
+                  </li>
+                  <li class="item-content item-input">
+                    <div class="item-inner">
+
+                      <div class="item-title item-label">Repita su Contraseña</div>
+                      <div class="item-input-wrap iconinput">
+                        <!--i class="far fa-key fa-fw fahi"></i-->
+                        <input type="password" name="clave" id="passwordsignupP2" placeholder="Escribe aqui..." data-translate="password-ph">
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <label class="item-checkbox item-content">
+                      <input type="checkbox" name="terms-checkbox" value="1"/>
+                      <i class="icon icon-checkbox margin-right"></i>
+                      <div class="item-inner no-padding-bottom no-padding-top">
+                        <div class="item-title no-break-line text-align-center terms-line">Acepto los <a href="#" @click="go_link('terms')" class="mSB">términos y condiciones</a></div>
+                      </div>
+                    </label>
+                  </li>
+                  <li>
+                    <label class="item-checkbox item-content">
+                      <input type="checkbox" name="politics-checkbox" value="1"/>
+                      <i class="icon icon-checkbox margin-right"></i>
+                      <div class="item-inner no-padding-bottom no-padding-top">
+                        <div class="item-title no-break-line text-align-center terms-line">Acepto las <a href="#" @click="go_link('politics')" class="mSB">políticas de privacidad</a></div>
+                      </div>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              <div class="block text-align-center">
+                <button type="button" class="button button-app primary button-login zi-0" @click="signUpPatient">
+                  Registrarse
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    methods: {
+      signInPatient: function () {
+        var $ = this.$;
+        var app = this.$app;
+        var router = this.$router;
+        if(document.getElementsByName('email')[0].value == "")
+        {
+          bringToast("Especifique los datos de sesión", false)
+          return;
+        }
+        if(document.getElementsByName('password')[0].value == "")
+        {
+          bringToast("Especifique los datos de sesión", false)
+          return;
+        }
+
+        var prloder = app.dialog.preloader('Iniciando sesión');
+
+        solstar.ajaxRequest('Auth/signInPatient', 'POST', function(data){
+            if(prloder)
+              prloder.close();
+              console.log(data);
+              if(data.success) {
+                solstar.setSession(solstar.params.sessionToken, data.data);
+                solstar.relocate(solstar.params.indexpage);
+              }
+              app.dialog.alert(data.message);
+            }, {
+            data: {
+              email: $('#emailloginP').val() || '',
+              password: $('#passwordloginP').val() || '',
+            }
+          }
+        );
+      },
+      signUpPatient: function () {
+        var $ = this.$;
+        var app = this.$app;
+        var router = this.$router;
+        if(document.getElementsByName('nombre')[0].value == "")
+        {
+          bringToast("Especifique los datos de registro", false)
+          return;
+        }
+        if(document.getElementsByName('correo')[0].value == "")
+        {
+          bringToast("Especifique los datos de registro", false)
+          return;
+        }
+        if(document.getElementsByName('clave')[0].value == "")
+        {
+          bringToast("Especifique los datos de registro", false)
+          return;
+        }
+        var prloder = app.dialog.preloader('Registrando usuario');
+        solstar.ajaxRequest('Auth/signUpPatient', 'POST', function(data) {
+          if(prloder)
+            prloder.close();
+          if(data.success) {
+            // solstar.setSession(solstar.params.sessionToken, data.data.user.auth);
+            location.reload()
+          } else {
+            app.dialog.alert(data.msj);
+          }
+        }, {
+            data: {
+              fullname: $('#namesignupP').val() || '',
+              email: $('#emailsignupP').val() || '',
+              password: $('#passwordsignupP').val() || '',
+            }
+          }
+        );
+      }, 
+      goBack: function() {
+        app.loginScreen.close();
+        router.back();
+      }
+    },
+    on: {
+      pageAfterIn: function()
+      {
+        $('.tab-link[href="#tab-2"]').addClass('tab-link-active');
+        $('.custom-tabbar').hide();
+      }
+    }
+  }
+</script>

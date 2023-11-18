@@ -1,0 +1,569 @@
+<template>
+  <div class="page">
+    <div class="navbar bg-color-white">
+      <div class="navbar-inner">
+        <div class="left sliding">
+          <a href="#" class="link back">
+            <i class="material-icons text-color-primary">arrow_backward</i>
+          </a>
+        </div>
+        <div class="title sliding text-color-light mL text-align-left no-uppercase title-font-16">
+          Búsqueda
+        </div>
+      </div>
+    </div>
+    <div class="page-content login-screen-content pb-0 ptr-content" @ptr:refresh="loadMore">
+      <div class="ptr-preloader" style="top: 5px">
+        <div class="preloader"></div>
+        <div class="ptr-arrow"></div>
+      </div>
+      <div class="block text-align-center">Mostrando resultados 1 de 50</div>
+      <div class="block">
+        {{#each doctores}}
+        <div class="card">
+          <div class="list media-list no-margin">
+            <ul>
+              <li>
+                <div class="item-content">
+                  <div class="item-media">
+                    <img src="{{profileimage}}" width="60" class="rounded-10" />
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title mR title-font-14"
+                        onclick="app.router.navigate('/doctor-detail/{{idusers}}')">
+                        {{titulo}} {{fullname}}
+                      </div>
+                      <div class="item-after" onclick="app.router.navigate('/doctor-detail/{{idusers}}')">
+                        {{rating}}<i class="material-icons dorado title-font-18">star</i>
+                      </div>
+                    </div>
+                    <div class="item-subtitle mL title-font-14 text-color-light" style="white-space: normal">
+                      {{address}} {{city}} {{state}} {{country}}
+                    </div>
+                    <div class="item-text mL text-color-primary title-font-16 margin-top">
+                      {{rangeprice}}
+                    </div>
+                    <div class="item-text margin-top" style="max-height: unset">
+                      <div class="row">
+                        <div class="col-20">
+                          {{#if chat_activo}}
+                          <button @click="requestChat({{idusers}}, '{{fullname}}')"
+                            class="button button-app button-cart primary fit solid mL no-margin-left">
+                            <i class="material-icons title-font-18">comment</i>
+                          </button>
+                          {{/if}}
+                        </div>
+                        <div class="col-20">
+                          <button class="button button-app button-cart primary fit solid mL no-margin-left">
+                            <i class="material-icons title-font-18">video_call</i>
+                          </button>
+                        </div>
+
+                        <div class="col-60">
+
+                          <button onclick="app.router.navigate('/doctor-detail1/')"
+                            class="button button-app button-cart primary fit solid"
+                            style="border-radius: 50px; width: 110px; max-width: 120px;">
+                            Ver perfil
+                          </button>
+                        </div>
+
+                        <!--<div class="block">
+
+                          <input type="text" placeholder="Your birth date" readonly="readonly" id="demo-calendar-default"/>
+                        </div>-->
+
+                        <!--<div class="col-25">
+                            <a onclick="app.router.navigate('/doctor-book/{{idusers}}')" class="button button-app primary fit solid mL button-app-2 margin-right">Agendarrrrrrrr</a>
+                          </div>-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+
+          <div class="block">
+            <div class="block-title" style="font-weight: bolder;">Agendar Cita</div>
+            <div class="list no-hairlines-md">
+              <ul>
+                <li>
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-input-wrap">
+                        <input type="text" placeholder="Select date" readonly="readonly" id="demo-calendar-events" />
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="col-50">
+              <div class="block-title" style="font-weight: bolder;">Hora inicial</div>
+              <div class="list no-hairlines-md">
+                <ul>
+                  <li>
+                    <div class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-input-wrap">
+                          <select id="hours" name="hours">
+                            <option selected="selected">Hr</option>
+                            <option>00</option>
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            <option>21</option>
+                            <option>22</option>
+                            <option>23</option>
+                          </select>
+                          :
+                          <select id="minute" name="minute">
+                            <option>Min</option>
+                            <option>00</option>
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            <option>21</option>
+                            <option>22</option>
+                            <option>23</option>
+                            <option>24</option>
+                            <option>25</option>
+                            <option>26</option>
+                            <option>27</option>
+                            <option>28</option>
+                            <option>29</option>
+                            <option>30</option>
+                            <option>31</option>
+                            <option>32</option>
+                            <option>33</option>
+                            <option>34</option>
+                            <option>35</option>
+                            <option>36</option>
+                            <option>37</option>
+                            <option>38</option>
+                            <option>39</option>
+                            <option>40</option>
+                            <option>41</option>
+                            <option>42</option>
+                            <option>43</option>
+                            <option>44</option>
+                            <option>45</option>
+                            <option>46</option>
+                            <option>47</option>
+                            <option>48</option>
+                            <option>49</option>
+                            <option>50</option>
+                            <option>51</option>
+                            <option>52</option>
+                            <option>53</option>
+                            <option>54</option>
+                            <option>55</option>
+                            <option>56</option>
+                            <option>57</option>
+                            <option>58</option>
+                            <option>59</option>
+                          </select>
+
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          
+            <div class="col-50">
+              <div class="block-title" style="font-weight: bolder;">Hora Final</div>
+              <div class="list no-hairlines-md">
+                <ul>
+                  <li>
+                    <div class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-input-wrap">
+                          <select id="hours_end" name="hours_end">
+                            <option selected="selected">Hr</option>
+                            <option>00</option>
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            <option>21</option>
+                            <option>22</option>
+                            <option>23</option>
+                          </select>
+                          :
+                          <select id="minute_end" name="minute_end">
+                            <option>Min</option>
+                            <option>00</option>
+                            <option>01</option>
+                            <option>02</option>
+                            <option>03</option>
+                            <option>04</option>
+                            <option>05</option>
+                            <option>06</option>
+                            <option>07</option>
+                            <option>08</option>
+                            <option>09</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                            <option>20</option>
+                            <option>21</option>
+                            <option>22</option>
+                            <option>23</option>
+                            <option>24</option>
+                            <option>25</option>
+                            <option>26</option>
+                            <option>27</option>
+                            <option>28</option>
+                            <option>29</option>
+                            <option>30</option>
+                            <option>31</option>
+                            <option>32</option>
+                            <option>33</option>
+                            <option>34</option>
+                            <option>35</option>
+                            <option>36</option>
+                            <option>37</option>
+                            <option>38</option>
+                            <option>39</option>
+                            <option>40</option>
+                            <option>41</option>
+                            <option>42</option>
+                            <option>43</option>
+                            <option>44</option>
+                            <option>45</option>
+                            <option>46</option>
+                            <option>47</option>
+                            <option>48</option>
+                            <option>49</option>
+                            <option>50</option>
+                            <option>51</option>
+                            <option>52</option>
+                            <option>53</option>
+                            <option>54</option>
+                            <option>55</option>
+                            <option>56</option>
+                            <option>57</option>
+                            <option>58</option>
+                            <option>59</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-100">
+              <button @click="appointmentPatient({{idusers}})" class="button button-app button-cart primary fit solid"
+                style="border-radius: 50px; width: 110px; max-width: 120px; margin-bottom: 30px">
+                Agendar
+              </button>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>    
+
+
+
+      <!--FINAL DE PAGE CONTENT-->
+
+      <div class="popup p-paisajes">
+        <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="50"
+          class="swiper-container swiper-init demo-swiper">
+          <div class="swiper-pagination"></div>
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">Slide 1</div>
+            <div class="swiper-slide">Slide 2</div>
+            <div class="swiper-slide">Slide 3</div>
+            <div class="swiper-slide">Slide 4</div>
+            <div class="swiper-slide">Slide 5</div>
+            <div class="swiper-slide">Slide 6</div>
+            <div class="swiper-slide">Slide 7</div>
+            <div class="swiper-slide">Slide 8</div>
+            <div class="swiper-slide">Slide 9</div>
+            <div class="swiper-slide">Slide 10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+</template>
+<script>
+  return {
+    data: function () {
+      var doctors = this.doctors || [];
+      console.log(doctors);
+      doctors.forEach(function (doctor) {
+        doctor.fwrating = (parseInt(doctor.rating) + 1) * 100;
+        doctor.rating = parseFloat(doctor.rating).toFixed(1);
+        doctor.rangeprice =
+          (doctor.min_serv && doctor.min_serv > 0
+            ? "$" + solstar.puntos(doctor.min_serv)
+            : "") +
+          (doctor.max_serv && doctor.min_serv > 0
+            ? (doctor.min_serv && doctor.min_serv > 0 ? " &mdash; " : "") +
+            "$" +
+            solstar.puntos(doctor.max_serv)
+            : "");
+      });
+      return {
+        doctores: doctors,
+      };
+    },
+
+    on: {
+      pageInit: function () {
+        var self = this;
+      },
+      pageAfterIn: function (event, page) {
+        var calendarBirth = app.calendar.create({
+          inputEl: "#birthdate",
+          locale: "es-419",
+          firstDay: 0,
+          openIn: "popover",
+          inputReadOnly: true,
+          backdrop: true,
+          toolbar: true,
+          toolbarCloseText: "Hecho",
+          header: true,
+          dateFormat: "yyyy-mm-dd",
+          //minDate: moment().subtract(100, 'years').locale('es').format('YYYY-MM-DD'),
+          //maxDate: moment().subtract(18, 'years').locale('es').format('YYYY-MM-DD'),
+        });
+
+        var today = new Date();
+        var weekLater = new Date().setDate(today.getDate() + 7);
+        var calendarEvents = app.calendar.create({
+          inputEl: "#demo-calendar-events",
+          //dateFormat: "M dd yyyy",
+          dateFormat: "yyyy-mm-dd",
+          events: {
+            from: today,
+            to: weekLater,
+          },
+        });
+      },
+    },
+    methods: {
+      loadMore: function (e, done) {
+        var self = this;
+        var $ = self.$$;
+
+        setTimeout(function () {
+          homeView.router.refreshPage();
+          done();
+        }, 1000);
+      },
+      goto: function (iddoctor) {
+        app.router.navigate("/doctor-detail/" + iddoctor);
+      },
+      startChat: function (iddoctor, fullname, prloder) {
+        if (prloder) {
+          prloder.close();
+        }
+        console.log(
+          "chatt",
+          String(app.data.user.idusers),
+          app.data.user.fullname
+        );
+
+        db.collection(`chat`).add({
+          code: uuid.v1(),
+          doctor: {
+            id: String(iddoctor),
+            name: fullname,
+          },
+          patient: {
+            id: String(app.data.user.idusers),
+            name: app.data.user.fullname,
+          },
+          messages: [],
+          created_at: new Date(),
+          updated_at: new Date(),
+        });
+
+        app.router.navigate("/doctor-chat/" + iddoctor);
+
+        solstar.ajaxRequest(
+          `App/getDoctorById/${iddoctor}`,
+          "GET",
+          function (data) {
+            if (data.in_chat == 1 || data.video_in_chat == 1) {
+              if (prloder) {
+                prloder.close();
+                app.dialog.alert(
+                  "El doctor se encuentra actualmente en una consulta. Intentelo mas tarde...",
+                  ""
+                );
+              }
+              return;
+            }
+
+            if (prloder) {
+              prloder.close();
+            }
+            console.log(
+              "chatt",
+              String(app.data.user.idusers),
+              app.data.user.fullname
+            );
+
+            db.collection(`chat`).add({
+              code: uuid.v1(),
+              doctor: {
+                id: String(iddoctor),
+                name: fullname,
+              },
+              patient: {
+                id: String(app.data.user.idusers),
+                name: app.data.user.fullname,
+              },
+              messages: [],
+              created_at: new Date(),
+              updated_at: new Date(),
+            });
+
+            app.router.navigate("/doctor-chat/" + iddoctor);
+          }
+        );
+      },
+      requestChat: function (iddoctor, fullname) {
+        var self = this;
+        var prloder = app.dialog.preloader("Iniciando chat...");
+        console.log(app.data.user);
+
+        const balance = app.data.user.saldo;
+        if (balance < 15000) {
+          if (prloder) {
+            console.log(balance);
+            prloder.close();
+
+            app.params.dialog.buttonCancel = "Cancelar";
+            app.params.dialog.buttonOk = "Aceptar";
+
+            var dialog = app.dialog.prompt(
+              "Su saldo se ha acabado, ¿desea recargar?",
+              "",
+              function (amount) {
+                if (amount >= 5000) {
+                  app.dialog.confirm(
+                    "¿Estas seguro que quieres recargar " + amount + " ?",
+                    "",
+                    function () {
+                      // solstar.ajaxRequest(`rechargeAmount`, "POST", function(data){
+                      //   console.log(data);
+                      //   app.dialog.alert('Se ha recargado ' + amount + ' exitosamente', '');
+                      //   window.location.href = `https://conexioncibernetica.com/demo4/fdadminstar/payments/pay/${data.payment_transaction}`;
+                      // }, { amount, userId: app.data.user.idusers });
+                    }
+                  );
+                } else {
+                  app.dialog.alert(
+                    "El saldo a recargar debe ser minimo de 5,000.00",
+                    ""
+                  );
+                }
+              }
+            );
+
+            dialog.open();
+
+            return;
+          }
+        }
+
+        self.startChat(iddoctor, fullname, prloder);
+      },
+
+      appointmentPatient: function (iddoctor) {
+
+        app.data.appoint = {
+          date_appoint: $('#demo-calendar-events').val(),
+          hours: $('select[name="hours"] option:selected').text(),
+          minute: $('select[name="minute"] option:selected').text(),
+          hours_end: $('select[name="hours_end"] option:selected').text(),
+          minute_end: $('select[name="minute_end"] option:selected').text(),
+          id_doctor: iddoctor,
+          document: app.data.user.appdocument,
+          name_patient: app.data.user.fullname
+          
+        }
+
+        app.router.navigate('/appointment/');             
+
+      },
+
+
+    },
+  };
+</script>

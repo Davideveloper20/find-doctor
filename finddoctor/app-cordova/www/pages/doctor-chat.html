@@ -1,0 +1,297 @@
+<template>
+    <div class="page chat-page">
+      <div class="navbar">
+        <div class="navbar-inner sliding" style="top:0;">
+          <div class="left rflex">
+            <a href="/search" class="link back" >
+              <i class="f7-icons">chevron_left</i>
+              <span class="ios-only">Back</span>
+            </a>
+          </div>
+          <div class="title blue2 rflex zi-5" id="chatTitle">
+            
+          </div>
+          <div class="right rflex">
+            <img src="https://conexioncibernetica.com/demo4/fdadminstar/assets/images/icon.png" id="chatDoctorImg" alt="Find Doctor">
+          </div>
+        </div>
+      </div>
+    <div class="toolbar messagebar" @messagebar:attachmentdelete="deleteAttachment">
+      <div class="toolbar-inner">
+        <!-- <a class="link icon-only" @click="fromCamera">
+          <i class="icon material-icons">camera_alt</i>
+        </a> -->
+        <div class="messagebar-area">
+          <textarea class="resizable" placeholder="Message" id="message-bar-textarea"></textarea>
+        </div>
+        <a class="link icon-only demo-send-message-link" @click="sendMessage">
+          <i class="icon material-icons">send</i>
+        </a>
+      </div>
+    </div>
+    <div class="page-content messages-content bg-transparent">
+      <div class="messages bg-transparent">
+        
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    data: function () {
+      var currentUser = [];
+
+      return {
+        usuario: currentUser,
+        chat: {},
+        accumulatedMinutes: 0,
+      };
+    },
+    methods: {
+      sheetToggle: function () {
+        var self = this;
+        self.messagebar.sheetToggle();
+      },
+      deleteAttachment: function (e, index) {
+        var self = this;
+        var image = self.messagebar.attachments.splice(index, 1)[0];
+        self.messagebar.renderAttachments();
+        self.checkAttachments();
+        // Uncheck in sheet
+        var imageIndex = self.images.indexOf(image);
+        self.$el.find('.messagebar-sheet .checkbox').eq(imageIndex).find('input').prop('checked', false);
+      },
+      handleAttachment: function (e) {
+        var self = this;
+        var $$ = self.$$;
+        var index = $(e.target).parents('label.checkbox').index();
+        var image = self.images[index];
+        if (e.target.checked) {
+          // Add to attachments
+          self.messagebar.attachments.unshift(image)
+        } else {
+          // Remove from attachments
+          self.messagebar.attachments.splice(self.messagebar.attachments.indexOf(image), 1);
+        }
+        self.messagebar.renderAttachments();
+        self.checkAttachments();
+        // rq
+      },
+      checkAttachments: function () {
+        var self = this;
+        if (self.messagebar.attachments.length > 0) {
+          self.messagebar.attachmentsShow();
+          self.messagebar.setPlaceholder('Add comment or Send');
+        } else {
+          self.messagebar.attachmentsHide();
+          self.messagebar.setPlaceholder('Message');
+        }
+      },
+      sendMessage: function () {
+        var self = this;
+        var date = new Date()
+        var hora = date.getHours()+':'+date.getMinutes()
+        var productId = this.$route.params.id;
+        var ayudas = this.$route.params.ayudas;
+        var random = Math.floor(Math.random() * 10000);
+        var text = self.messagebar.getValue().replace(/\n/g, '<br>').trim();
+        if(text!="")
+        {
+          var messagesToSend = [];
+          self.messagebar.attachments.forEach(function (attachment) {
+            var size = attachment.split('lorempixel.com/')[1].split('/');
+            messagesToSend.push({
+              image: '<img src="' + attachment + '" style="width: ' + (size[0]/2) + 'px; height: ' + (size[1]/2) + 'px">'
+            });
+          });
+          if (text.trim().length) {
+            messagesToSend.push({
+              text: text,
+              textFooter: hora+ ' <i class="material-icons" id="'+random+'">access_time</i>'
+            });
+          }
+          // Reset attachments
+          self.messagebar.attachments = [];
+          self.checkAttachments();
+          // Hide sheet
+          self.messagebar.sheetHide();
+          // Uncheck selected images in sheet
+          self.messagebar.$sheetEl.find('input').prop('checked', false);
+          // Clear area
+          self.messagebar.clear();
+          // Focus area
+          if (text.length) self.messagebar.focus();
+          // Send message
+          self.messages.addMessages(messagesToSend); //Este metodo 
+          //Aqui va el insert a firestore
+          
+          self.payment();
+
+          
+          if (self.chat && self.chat.id) {
+            self.chat.messages.push({
+              addressee: 'doctor',
+              sender: 'patient',
+              payload: text,
+              created_at: new Date(),
+            });
+
+            db.collection('chat')
+            .doc(self.chat.id)
+            .update({
+              messages: self.chat.messages,
+            });
+          }
+
+
+        }
+      },
+      init_chat: function() {
+        var { Observable } = rxjs;
+        var { map } = rxjs.operators;
+        var self = this;
+
+        console.log(app.data.user.idusers);
+        console.log(self.iddoctor);
+
+        Observable.create((observer) => db.collection("chat")
+          .where('patient.id', '==', String(app.data.user.idusers))
+          .where('doctor.id', '==', String(self.iddoctor))
+          .orderBy('created_at', 'desc')
+          .limit(1)
+          .onSnapshot(observer))
+          .pipe(
+            map((data) => {
+
+              console.log(data);
+
+              if (data.docs.length > 0) {
+                self.messages.clear();
+  
+                const chat = {
+                  id: data.docs[0].id,
+                  ...data.docs[0].data(),
+                };
+  
+                console.log(chat);
+  
+                
+                  self.chat = chat;
+    
+                  chat.messages.map((message) => {
+                    const type = message.sender === 'doctor' ? 'received' : 'sent';
+                    self.messages.addMessages([{ text: message.payload, type }]);
+                  });
+              } else {
+
+                self.messages.addMessages([]);
+              }
+
+            }),
+          ).subscribe();
+      },
+      payment: function (pay = false) {
+        var self = this;
+        console.log(self.chat.messages);
+
+        if (self.chat && self.chat.messages && self.chat.messages.length >= 1) {
+          console.log(self.chat.created_at.toDate());
+          var diff = (self.chat.created_at.toDate() - self.chat.messages[self.chat.messages.length - 1].created_at.toDate());
+          var minutes = Math.abs((Math.round(((diff % 86400000) % 3600000) / 60000)));
+
+          console.log('minutes', Math.abs(minutes));
+
+          const oweding = ((15000*minutes)/30);
+          console.log('oweding...', oweding);
+
+          
+          if (minutes >= 27 && !pay) {
+            app.params.dialog.buttonCancel = 'Cancelar';
+            app.params.dialog.buttonOk = 'Aceptar';
+
+            var dialog = app.dialog.prompt('Su saldo se esta acabando, ¿desea recargar?', '', function (amount) {
+              if (amount >= 5000) {
+                app.dialog.confirm('¿Estas seguro que quieres recargar ' + amount + ' ?', '', function () {
+
+                  // solstar.ajaxRequest(`rechargeAmount`, "POST", function(data){         
+                  //   console.log(data); 
+                  //   app.dialog.alert('Se ha recargado ' + amount + ' exitosamente', '');
+                  //   window.open(`https://conexioncibernetica.com/demo6/finddoctor/payments/pay/${data.payment_transaction}`);
+                  // }, { amount, userId: app.data.user.idusers });
+                  return;
+                });
+              } else {
+                app.dialog.alert('El saldo a recargar debe ser minimo de 5,000.00', '');
+              }
+            });
+
+            dialog.open();
+            app.router.navigate('/search-result/'+self.iddoctor);
+          }
+
+          if(pay) {
+            console.log('paying...', oweding);
+            solstar.ajaxRequest(`payment`, "POST", function(data){  
+              app.router.navigate('/search-result/'+self.iddoctor);
+            }, {
+              doctor_id: self.iddoctor,
+              amount: oweding,
+              time_chat: minutes,
+              start_date: self.chat.created_at.toDate(),
+              wallet_amount: app.data.user.saldo,
+              code: app.data.user.saldo >= oweding ?  1 : 0,
+              user_id: app.data.user.idusers,
+              wallet_id: app.data.user.wallet_id,
+            });
+          }
+        } else {
+          app.router.navigate('/search-result/'+self.iddoctor);
+        }
+      }
+    },
+    on: {
+      pageBeforeRemove: function (e, page) {
+        var self = this;
+        self.payment(true);
+        console.log('here!');
+        solstar.ajaxRequest(`App/updateStatusChatByUserId/${self.iddoctor}`, "PUT", function(data){          
+          console.log(data);
+        }, { status: 0 });
+
+        if (self.messagebar) self.messagebar.destroy();
+      },
+      pageInit: function (e, page) {
+        var self = this;
+        var app = self.$app;
+
+        solstar.ajaxRequest(`App/updateStatusChatByUserId/${self.iddoctor}`, "PUT", function(data){          
+          console.log(data);
+        }, { status: 1 });
+
+        self.messagebar = app.messagebar.create({
+          el: page.$el.find('.messagebar'),
+          attachments: []
+        });
+        self.messages = app.messages.create({
+          el: page.$el.find('.messages'),
+          firstMessageRule: function (message, previousMessage, nextMessage) {
+            if (message.isTitle) return false;
+            if (!previousMessage || previousMessage.type !== message.type || previousMessage.name !== message.name) return true;
+            return false;
+          },
+          lastMessageRule: function (message, previousMessage, nextMessage) {
+            if (message.isTitle) return false;
+            if (!nextMessage || nextMessage.type !== message.type || nextMessage.name !== message.name) return true;
+            return false;
+          },
+          tailMessageRule: function (message, previousMessage, nextMessage) {
+            if (message.isTitle) return false;
+            if (!nextMessage || nextMessage.type !== message.type || nextMessage.name !== message.name) return true;
+            return false;
+          }
+        });
+        self.init_chat() //Aqui inicializamos
+      }
+    }
+  }
+</script>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+	<title>Find Doctor</title>
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css" integrity="sha256-PHcOkPmOshsMBC+vtJdVr5Mwb7r0LkSVJPlPrp/IMpU=" crossorigin="anonymous" />
+	<link rel="shortcut icon" href="assets/imgs/favicon.png" type="image/x-icon">
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-light container">
+			<a class="navbar-brand" href="#">
+				<img src="assets/imgs/logo1.png" class="d-inline-block align-top" alt="">
+			</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="nav navbar-nav ml-auto">
+			<li class="nav-item">
+				<a class="nav-link text-primary" href="#">¿Quienes somos?</a>
+			</li>
+			<li class="nav-item pl-5">
+				<a class="nav-link text-primary" href="#">FAQ</a>
+			</li>
+			<li class="nav-item pl-5">
+				<a class="nav-link text-primary" href="#">Contacto</a>
+			</li>
+			<li class="nav-item pl-5">
+				<a class="btn btn-primary ingresar text-light" href="#">Ingresar</a>
+			</li>
+			<li class="nav-item pl-5">
+					<a class="nav-link text-primary" href="#"><b>ES</b> | EN</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="result_search animated bounceInUp slow d-none" id="list_specialist">
+		<button type="button" class="close" aria-label="Close" id="btn_close_list">
+			<span aria-hidden="true">&times;</span>
+		</button>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 pb-5" id="content_specialist"><!--
+					<div class="card mt-2 border-0 card-block p-3" style="font-size:15px;">
+						<div class="row">
+							<div class="col-md-2">
+								<img src="assets/imgs/doctor.png" class="img-fluid d-block mx-auto">
+							</div>
+							<div class="col-md-10">
+								<h6 class="card-title">Jenny Aponte<span class="float-right"> 4.5 <i class="fa fa-star text-warning"></i></span></h6>
+								<p class="text-muted">
+									Av Calle 134 # 7 - 83 (Cons. 336 Torre 3 Edificio ALTOS DEL BOSQUE), Bogotá Consultorio privado MEDICINA GENERAL Y DE FAMILIA
+								</p>
+								<small class="text-primary">$50.000-$70.000</small>
+								<div class="d-block">
+									<button class="btn btn-sm btn-primary text-light"><i class="fa fa-comment"></i></button>
+									<button class="btn btn-sm btn-primary float-right pl-3 pr-3">Agendar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card mt-2 border-0 card-block p-3" style="font-size:15px;">
+						<div class="row">
+							<div class="col-md-2">
+								<img src="assets/imgs/doctor.png" class="img-fluid d-block mx-auto">
+							</div>
+							<div class="col-md-10">
+								<h6 class="card-title">Carla Villaraga<span class="float-right"> 4.5 <i class="fa fa-star text-warning"></i></span></h6>
+								<p class="text-muted">
+									Av Calle 134 # 7 - 83 (Cons. 336 Torre 3 Edificio ALTOS DEL BOSQUE), Bogotá Consultorio privado MEDICINA GENERAL Y DE FAMILIA
+								</p>
+								<small class="text-primary">$50.000-$70.000</small>
+								<div class="d-block">
+									<button class="btn btn-sm btn-primary text-light"><i class="fa fa-comment"></i></button>
+									<button class="btn btn-sm btn-primary float-right pl-3 pr-3">Agendar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card mt-2 card-block p-3" style="font-size:15px;">
+						<div class="row">
+							<div class="col-md-2">
+								<img src="assets/imgs/doctor.png" class="img-fluid d-block mx-auto">
+							</div>
+							<div class="col-md-10">
+								<h6 class="card-title">Miguel Morales<span class="float-right"> 4.5 <i class="fa fa-star text-warning"></i></span></h6>
+								<p class="text-muted">
+									Av Calle 134 # 7 - 83 (Cons. 336 Torre 3 Edificio ALTOS DEL BOSQUE), Bogotá Consultorio privado MEDICINA GENERAL Y DE FAMILIA
+								</p>
+								<small class="text-primary">$50.000-$70.000</small>
+								<div class="d-block">
+									<button class="btn btn-sm btn-primary text-light"><i class="fa fa-comment"></i></button>
+									<button class="btn btn-sm btn-primary float-right pl-3 pr-3">Agendar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card mt-2 border-0 card-block p-3" style="font-size:15px;">
+						<div class="row">
+							<div class="col-md-2">
+								<img src="assets/imgs/doctor.png" class="img-fluid d-block mx-auto">
+							</div>
+							<div class="col-md-10">
+								<h6 class="card-title">Harold Restrepo<span class="float-right"> 4.5 <i class="fa fa-star text-warning"></i></span></h6>
+								<p class="text-muted">
+									Av Calle 134 # 7 - 83 (Cons. 336 Torre 3 Edificio ALTOS DEL BOSQUE), Bogotá Consultorio privado MEDICINA GENERAL Y DE FAMILIA
+								</p>
+								<small class="text-primary">$50.000-$70.000</small>
+								<div class="d-block">
+									<button class="btn btn-sm btn-primary text-light"><i class="fa fa-comment"></i></button>
+									<button class="btn btn-sm btn-primary float-right pl-3 pr-3">Agendar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card mt-2 border-0 card-block p-3" style="font-size:15px;">
+						<div class="row">
+							<div class="col-md-2">
+								<img src="assets/imgs/doctor.png" class="img-fluid d-block mx-auto">
+							</div>
+							<div class="col-md-10">
+								<h6 class="card-title">Guillermo Antoño<span class="float-right"> 4.5 <i class="fa fa-star text-warning"></i></span></h6>
+								<p class="text-muted">
+									Av Calle 134 # 7 - 83 (Cons. 336 Torre 3 Edificio ALTOS DEL BOSQUE), Bogotá Consultorio privado MEDICINA GENERAL Y DE FAMILIA
+								</p>
+								<small class="text-primary">$50.000-$70.000</small>
+								<div class="d-block">
+									<button class="btn btn-sm btn-primary text-light"><i class="fa fa-comment"></i></button>
+									<button class="btn btn-sm btn-primary float-right pl-3 pr-3">Agendar</button>
+								</div>
+							</div>
+						</div>
+					</div>					
+				--></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">		
+		<section class="h-100 screen align-middle" style="vertical-align: middle;">
+			<div class="row">
+				<div class="col-md-12 mt-5">
+				    <div id="buscador" class="mt-5">
+						<h1 class="titulo text-center">Tu especialista se encuentra a un click</h1>
+						<p class="text-center">Encuentra a quien necesitas entre 2.000 especialistas de todo el país</p>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<div class="input-group">
+										<input type="text" class="border-0 buscadores form-control form-control-lg" id="search_specialist" placeholder="Especialista">
+										<div class="input-group-append">
+											<div class="input-group-text border-0 buscadores"><i class="fa fa-user-md"></i></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<div class="input-group">
+										<input type="text" class="border-0 buscadores form-control form-control-lg" id="search_city" placeholder="Ciudad" value="Medellín">
+										<div class="input-group-append">
+											<div class="input-group-text border-0 buscadores"><i class="fa fa-map-marker-alt"></i></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<button class="btn btn-primary px-5 d-block mx-auto my-3 btn-lg border-radius-btn" id="btn_search">Buscar</button>
+							</div>
+						</div>
+					</div>
+					<div class="bg-warning">
+						<div class="row">
+							<div class="col-md-12 h-100">
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</section>
+	</div>
+	<div class="container">
+		<section class="py-5">
+			<div class="row">
+				<div class="col-md-6">
+					<img src="assets/imgs/nuestra_especialidad.jpg" class="img-fluid">
+				</div>
+				<div class="col-md-6">
+					<small class="text-primary">¿QUIÉNES SOMOS?</small>
+					<h3 class="text-primary">Tu directorio de especialista</h3>
+					<p class="text-dark">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magni nihil iste excepturi eos omnis voluptates cupiditate ex animi quos et laboriosam est repellat beatae, corrupti sed. Consectetur accusantium qui exercitationem.</p>
+
+					<button class="btn btn-secondary px-5 border-radius-btn">Leer más</button>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div class="container">
+		<section class="py-5">
+				<h2 class="text-primary text-center mb-2 mt-2">Nuestros servicios</h2>
+				<div class="row mt-5">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-4">
+								<div class="card border-0 bg-primary">
+									<div class="card-body text-center">
+										<img src="assets/imgs/servicios_1.png" class="img-fluid d-block mx-auto">
+										<br>
+										<small>Odontología</small>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card border-0">
+									<div class="card-body text-center">
+										<img src="assets/imgs/servicios_2.png" class="img-fluid d-block mx-auto">
+										<br>
+										<small>Medicina General</small>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card border-0">
+									<div class="card-body text-center">
+										<img src="assets/imgs/servicios_3.png" class="img-fluid d-block mx-auto">
+										<br>
+										<small>Cardiología</small>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-4">
+								<div class="col-md-4 h-50">
+									<div class="card border-0">
+										<div class="card-body text-center">
+											<img src="assets/imgs/servicios_4.png" class="img-fluid d-block mx-auto">
+											<br>
+											Optometría
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="card border-0">
+										<div class="card-body text-center">
+											<img src="assets/imgs/servicios_5.png" class="img-fluid d-block mx-auto">
+											<br>
+											<small>Farmacia</small>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="card border-0">
+										<div class="card-body text-center">
+											<img src="assets/imgs/servicios_6.png" class="img-fluid d-block mx-auto">
+											<br>
+											<small>Ortopedia</small>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card border-0 h-100" style="widows: 100vh;">
+						<img src="assets/imgs/odontologia.jpg" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">Odontología</h5>
+							<p class="card-text">Consulte con nuestros especialistas desde servicios de odontología general hasta rehabilitación oral y cirugía</p>
+						</div>
+						</div>
+					</div>
+				</div>
+		</section>
+	</div>
+	<div class="container">
+		<section class="py-5">
+			<div class="row">
+					<div class="col-md-6">
+						<h3 class="text-primary">Nuestra especialidad</h3>
+						<p>Ofrecerte los mejores especialistas del país</p>
+			
+							<div class="card border-0">
+								<div class="card-body bg-primary">
+									<div class="row">
+										<div class="col-3">
+											<img src="assets/imgs/nuestra_especialidad.png" class="img-fluid d-block mx-auto" style="vertical-align: middle;">
+										</div>
+										<div class="col-auto" style="vertical-align: middle;">
+											<h4 class="text-light">Reserva tu cita online</h4>
+											<small class="text-light">Busca el especialista que necesitas</small>
+											<button class="btn btn-light d-block mx-auto text-primary border-radius-btn">Buscar especialista</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<img src="assets/imgs/nuestra_especialidad.jpg" class="img-fluid">
+						</div>
+			</div>
+		</section>
+	</div>
+	<div class="container-fluid pt-5 pb-5">
+		<section class="row mt-5 bg-primary p-5 text-light">
+			<div class="col-md-4 text-center">
+				<img src="assets/imgs/especialista.png" class="img-fluid py-5">
+				<h2>21,036</h2>
+				<small>Especialista de la salud</small>
+			</div>
+			<div class="col-md-4 text-center">
+				<img src="assets/imgs/cities.png" class="img-fluid py-5">
+				<h2>15</h2>
+				<small>Ciudades</small>
+			</div>
+			<div class="col-md-4 text-center">
+				<img src="assets/imgs/paciente.png" class="img-fluid py-5">
+				<h2>15,309</h2>
+				<small>Pacientes felices</small>
+			</div>
+		</section>
+	</div>
+	<div class="container">
+		<section class="row mt-5">
+			<div class="col-md-6">
+				<div class="card border-0">
+					<div class="card-body">
+						<img src="assets/imgs/quote.png" class="img-fluid m-2" width="80">
+						<p>I shall see the face of Mars, anyhow, and that will be a rare experience. It seems to me that a view of the heavenly bodies through a fine telescope, as well as a tour round the world, should form a part of a liberal education.</p>
+						<img src="assets/imgs/comment.jpg" class="img-fluid">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="card border-0">
+					<div class="card-body">
+						<img src="assets/imgs/quote.png" class="img-fluid m-2" width="80">
+						<p>I shall see the face of Mars, anyhow, and that will be a rare experience. It seems to me that a view of the heavenly bodies through a fine telescope, as well as a tour round the world, should form a part of a liberal education.</p>
+						<img src="assets/imgs/comment.jpg" class="img-fluid">
+					</div>
+				</div>
+			</div>
+			<button class="btn btn-primary d-block mx-auto m-3 border-radius-btn px-5">Leer más</button>
+		</section>
+	</div>
+	<div class="container-fluid w-100">
+		<section class="row mt-5 bg-primary p-5 text-light">
+			<div class="col-md-2">
+				<img src="assets/imgs/justo_para_ti.png" class="img-fluid d-block mx-auto">
+			</div>
+			<div class="col-md-4" style="vertical-align: middle;">
+				<small>JUSTO PARA TI</small>
+				<h2>Toma una cita gratis</h2>
+			</div>
+			<div class="col-md-6">
+				<div class="p-5 tel-contacto">
+					<div class="form-group">
+						<input type="number" placeholder="Teléfono de contacto" class="text-center border-0 form-control">
+							<button class="btn btn-primary px-5 mt-2 mx-auto d-block">Enviar</button>
+						</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div class="container">
+		<section class="row mt-5">
+			<div class="col-md-4">
+				<div class="card border-0">
+					<div class="card-body bg-primary text-light">
+						¿Que costo tienen las citas?
+						<br>
+						<small>
+								El costo de las citas dependen de cada especialista, sin embargo, podrás ver el valor de ellas en el detalle de cada médico.
+						</small>
+					</div>
+				</div>
+				<div class="card border-0 mt-2">
+					<div class="card-body">
+						¿Cómo inscribirme si soy médico?
+					</div>
+					</div>
+					<div class="card border-0 mt-2">
+						<div class="card-body">
+							¿Tengo que pagar membresia?
+						</div>
+					</div>
+
+					<button class="btn btn-primary text-light px-3 mt-4 border-radius-btn">Leer más</button>
+			</div>
+			<div class="col-md-4 offset-md-2">
+				<small class="text-primary">F.A.Q</small>
+				<h2 class="text-primary">Preguntas frecuentes</h2>
+				<p>¿Tienes dudas? te las resolvemos aquí</p>
+			</div>
+		</section>
+	</div>
+	<div class="container">
+		<section class="mt-5 row">
+			<div class="col-md-5">
+				<small class="text-primary">CONTACTO</small>
+				<h2 class="text-primary">Escríbenos</h2>
+
+				<div class="form-group">
+					<input type="text" class="border-0 buscadores form-control form-control-lg" placeholder="Tu nombre">
+				</div>
+				<div class="form-group">
+						<input type="text" class="border-0 buscadores form-control form-control-lg" placeholder="Tu correo">
+					</div>
+					<div class="form-group">
+							<textarea class="form-control buscadores border-0" rows="3"></textarea>
+						</div>
+
+						<button class="btn btn-primary px-5 border-radius-btn">Enviar</button>
+			</div>
+			<div class="col-md-7">
+				<img src="assets/imgs/escribenos.png" class="img-fluid d-block mx-auto">
+			</div>
+		</section>
+	</div>
+	<div class="container-fluid">
+		<footer class="row mt-5 p-5">
+				<div class="col-md-6">
+					<img src="assets/imgs/Logo_blanco.png" class="img-fluid d-block" width="200">
+					<small class="footer-text d-block mt-5">Copyright © 2019. Todos los derechos reservados.</small>
+				</div>
+				<div class="col-md-6">
+					<img src="assets/imgs/Facebook.png" class="img-fluid float-right m-1">
+					<img src="assets/imgs/Twitter.png" class="img-fluid float-right m-1">
+					<img src="assets/imgs/Instagram.png" class="img-fluid float-right m-1">
+					<br>
+					<small class="mt-5 footer-text d-block text-right">Términos y condiciones Política de privacidad</small>
+				</div>
+		</footer>
+	</div>
+	<script src="assets/js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="assets/js/jquery-migrate-1.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" integrity="sha256-qM7QTJSlvtPSxVRjVWNM2OfTAz/3k5ovHOKmKXuYMO4=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+	<script src="assets/solstar/solstar.js" type="text/javascript" charset="utf-8"></script>
+	<script src="assets/solstar/conf.js" type="text/javascript" charset="utf-8"></script>
+	<script src="assets/js/main.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		var especialistas = ["Alergología",
+							"Análisis clínico",
+							"Anatomía patológica",
+							"Anestesiología",
+							"Angiología",
+							"Bioquímica clínica",
+							"Cardiología",
+							"Cirugía cardíaca",
+							"Cirugía general",
+							"Cirugía oral y maxilofacial",
+							"Cirugía ortopédica",
+							"Cirugía pediátrica",
+							"Cirugía plástica",
+							"Cirugía torácica",
+							"Dermatología",
+							"Dietética",
+							"Endocrinología",
+							"Farmacología",
+							"Gastroenterología",
+							"Genética médica",
+							"Geriatría",
+							"Ginecología",
+							"Hematología",
+							"Infectología",
+							"Inmunología",
+							"Medicina aeroespacial",
+							"Medicina de urgencias",
+							"Medicina del deporte",
+							"Medicina del trabajo",
+							"Medicina familiar y comunitaria",
+							"Medicina física y rehabilitación",
+							"Medicina forense",
+							"Medicina intensiva",
+							"Medicina interna",
+							"Medicina nuclear",
+							"Medicina preventiva y salud pública",
+							"Microbiología y parasitología",
+							"Nefrología",
+							"Neumología",
+							"Neurocirugía",
+							"Neurofisiología clínica",
+							"Neurología",
+							"Nutrición",
+							"Nutrigenómica",
+							"Nutriología",
+							"Obstetricia",
+							"Oftalmología",
+							"Oncología médica",
+							"Oncología radioterápica",
+							"Otorrinolaringología",
+							"Pediatría",
+							"Psiquiatría",
+							"Radiología",
+							"Reumatología",
+							"Toxicología",
+							"Traumatología y ortopedia",
+							"Trofología",
+							"Urología"];
+		var cities = ["Medellín", "Bogotá"];
+
+		function autocomplete(inp, arr) {
+	  /*the autocomplete function takes two arguments,
+	  the text field element and an array of possible autocompleted values:*/
+	  var currentFocus;
+	  /*execute a function when someone writes in the text field:*/
+	  inp.addEventListener("input", function(e) {
+	      var a, b, i, val = this.value;
+	      /*close any already open lists of autocompleted values*/
+	      closeAllLists();
+	      if (!val) { return false;}
+	      currentFocus = -1;
+	      /*create a DIV element that will contain the items (values):*/
+	      a = document.createElement("DIV");
+	      a.setAttribute("id", this.id + "autocomplete-list");
+	      a.setAttribute("class", "autocomplete-items");
+	      /*append the DIV element as a child of the autocomplete container:*/
+	      this.parentNode.appendChild(a);
+	      /*for each item in the array...*/
+	      for (i = 0; i < arr.length; i++) {
+	        /*check if the item starts with the same letters as the text field value:*/
+	        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+	          /*create a DIV element for each matching element:*/
+	          b = document.createElement("DIV");
+	          /*make the matching letters bold:*/
+	          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+	          b.innerHTML += arr[i].substr(val.length);
+	          /*insert a input field that will hold the current array item's value:*/
+	          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+	          /*execute a function when someone clicks on the item value (DIV element):*/
+	              b.addEventListener("click", function(e) {
+	              /*insert the value for the autocomplete text field:*/
+	              inp.value = this.getElementsByTagName("input")[0].value;
+	              /*close the list of autocompleted values,
+	              (or any other open lists of autocompleted values:*/
+	              closeAllLists();
+	          });
+	          a.appendChild(b);
+	        }
+	      }
+	  });
+	  /*execute a function presses a key on the keyboard:*/
+	  inp.addEventListener("keydown", function(e) {
+	      var x = document.getElementById(this.id + "autocomplete-list");
+	      if (x) x = x.getElementsByTagName("div");
+	      if (e.keyCode == 40) {
+	        /*If the arrow DOWN key is pressed,
+	        increase the currentFocus variable:*/
+	        currentFocus++;
+	        /*and and make the current item more visible:*/
+	        addActive(x);
+	      } else if (e.keyCode == 38) { //up
+	        /*If the arrow UP key is pressed,
+	        decrease the currentFocus variable:*/
+	        currentFocus--;
+	        /*and and make the current item more visible:*/
+	        addActive(x);
+	      } else if (e.keyCode == 13) {
+	        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+	        e.preventDefault();
+	        if (currentFocus > -1) {
+	          /*and simulate a click on the "active" item:*/
+	          if (x) x[currentFocus].click();
+	        }
+	      }
+	  });
+	  function addActive(x) {
+	    /*a function to classify an item as "active":*/
+	    if (!x) return false;
+	    /*start by removing the "active" class on all items:*/
+	    removeActive(x);
+	    if (currentFocus >= x.length) currentFocus = 0;
+	    if (currentFocus < 0) currentFocus = (x.length - 1);
+	    /*add class "autocomplete-active":*/
+	    x[currentFocus].classList.add("autocomplete-active");
+	  }
+	  function removeActive(x) {
+	    /*a function to remove the "active" class from all autocomplete items:*/
+	    for (var i = 0; i < x.length; i++) {
+	      x[i].classList.remove("autocomplete-active");
+	    }
+	  }
+	  function closeAllLists(elmnt) {
+	    /*close all autocomplete lists in the document,
+	    except the one passed as an argument:*/
+	    var x = document.getElementsByClassName("autocomplete-items");
+	    for (var i = 0; i < x.length; i++) {
+	      if (elmnt != x[i] && elmnt != inp) {
+	      x[i].parentNode.removeChild(x[i]);
+	    }
+	  }
+	}
+	/*execute a function when someone clicks in the document:*/
+	document.addEventListener("click", function (e) {
+	    closeAllLists(e.target);
+	});
+	}
+
+	function closeResult()
+	{
+
+	}
+
+	autocomplete(document.getElementById("search_specialist"), especialistas);
+	autocomplete(document.getElementById("search_city"), cities);
+	</script>
+</body>
+</html>

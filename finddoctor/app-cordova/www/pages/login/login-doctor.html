@@ -1,0 +1,105 @@
+<template>
+  <div class="page no-toolbar no-navbar no-swipeback">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="f7-icons">chevron_left</i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">
+          <img src="assets/imgs/logo1.png" alt="Find Doctor">
+        </div>
+      </div>
+    </div>
+    <div class="page-content login-screen-content">
+      <div class="login-screen-title">
+        <div class="block text-align-center pagetitle rflex">
+          Ingresar como médico
+        </div>
+      </div>
+      <form id="form-mediclogin" action="">
+        <div class="list">
+          <ul>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Email</div>
+                <div class="item-input-wrap iconinput">
+                  <!--i class="far fa-user fa-fw fahi"></i-->
+                  <input type="email" name="email" id="emailloginD" placeholder="Correo electrónico" data-translate="email-ph">
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Contraseña</div>
+                <div class="item-input-wrap iconinput">
+                  <!--i class="far fa-key fa-fw fahi"></i-->
+                  <input type="password" name="password" id="passwordloginD" placeholder="Contraseña" data-translate="password-ph">
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="list">
+          <ul>
+            <li>
+              <button type="button" class="button button-app primary button-login" @click="signInDoctor">
+                Ingresar
+              </button>
+            </li>
+          </ul>
+        </div>
+        <br>
+        <div class="list">
+          <ul>
+            <li>
+              <a href="/forgot-doctor/" class="button button-app primary button-recover">Olvide mi contraseña</a>
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    methods: {
+      signInDoctor: function () {
+        var $ = this.$;
+        var app = this.$app;
+        var router = this.$router;
+        var prloder = app.dialog.preloader('Iniciando sesión');
+        solstar.ajaxRequest('auth/signIn', 'POST', function(data) {
+            if(prloder)
+              prloder.close();
+            if(data.success) {
+              solstar.setSession(solstar.params.sessionToken, data.token);
+              solstar.relocate(solstar.params.indexpage);
+            } else {
+              app.dialog.alert(data.message);
+            }
+          }, {
+            user: $('#emailloginD').val() || '',
+            password: $('#passwordloginD').val() || '',
+          }, loader = true, progress=null, function(err) {
+            if(prloder)
+              prloder.close();
+            if(err.data.responseJSON) {
+              console.log('Ha Ocurrido un error LOGINSD', err);
+              app.dialog.alert(err.data.responseJSON.message || 'Ha Ocurrido un error');
+            } else {
+              console.log('Ha Ocurrido un error LOGINSD', err);
+              app.dialog.alert('Ha Ocurrido un error');
+            }
+          }
+        );
+      },
+      goBack: function() {
+        app.loginScreen.close();
+        router.back();
+      }
+    }
+  }
+</script>

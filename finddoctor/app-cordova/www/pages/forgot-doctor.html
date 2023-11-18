@@ -1,0 +1,82 @@
+<template>
+  <div class="page no-toolbar no-navbar no-swipeback">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="f7-icons">chevron_left</i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">
+          <img src="assets/imgs/logo1.png" alt="Find Doctor">
+        </div>
+      </div>
+    </div>
+    <div class="page-content login-screen-content">
+      <div class="login-screen-title">
+        <div class="block text-align-center pagetitle rflex">
+          Recuperar Contraseña
+        </div>
+      </div>
+      <div class="block text-align-center subtit">
+        Has olvidado tu contraseña de acceso como médico, recuperala aquí
+      </div>
+      <form id="form-recoverD" action="">
+        <div class="list">
+          <ul>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Correo Electŕonico</div>
+                <div class="item-input-wrap iconinput">
+                  <i class="far fa-user fa-fw fahi"></i>
+                  <input type="email" name="email" id="emailrecoverD" placeholder="Correo electrónico" data-translate="email-ph">
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="list">
+          <ul>
+            <li>
+              <button type="button" class="button button-app primary button-login" @click="forgotDoctor">
+                Recuperar
+              </button>
+            </li>
+          </ul>
+        </div>
+        <br>
+        <div class="list">
+          <ul>
+            <li>
+              <button type="button" class="button button-app primary button-recover back button-back" @click="goBack">
+                Ingresar
+              </button>
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    methods: {
+      forgotDoctor: function () {
+        var $ = this.$;
+        var app = this.$app;
+        var router = this.$router;
+        var username = $('input#demo-username-2').val();
+        var password = $('input#demo-password-2').val();
+        app.dialog.alert('Username: ' + username + '<br>Password: ' + password, function () {
+          app.loginScreen.close();
+          router.back();
+        })
+      }, 
+      goBack: function() {
+        app.loginScreen.close();
+        router.back();
+      }
+    }
+  }
+</script>

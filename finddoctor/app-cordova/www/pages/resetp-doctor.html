@@ -1,0 +1,120 @@
+<template>
+  <div class="page no-toolbar no-navbar no-swipeback">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="f7-icons">chevron_left</i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">
+          <img src="assets/imgs/logo1.png" alt="Find Doctor">
+        </div>
+      </div>
+    </div>
+    <div class="page-content login-screen-content">
+      <div class="login-screen-title">
+        <div class="block text-align-center pagetitle rflex">
+          Restablecer Contraseña
+        </div>
+      </div>
+      <div class="block text-align-center subtit">
+        Establece una nueva contraseña de acceso
+      </div>
+      <form id="form-resetP" action="">
+        <div class="list">
+          <ul>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Correo Electŕonico</div>
+                <div class="item-input-wrap iconinput">
+                  <i class="far fa-user fa-fw fahi"></i>
+                  <input type="email" name="email" id="emailresetP" placeholder="Correo electrónico" data-translate="email-ph">
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Código </div>
+                <div class="item-input-wrap iconinput">
+                  <i class="far fa-user fa-fw fahi"></i>
+                  <input type="text" name="smscode" id="smscoderesetP" placeholder="Código recibido por sms" data-translate="smscode-ph">
+                </div>
+              </div>
+            </li>
+            <li class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Nueva Contraseña </div>
+                <div class="item-input-wrap iconinput">
+                  <i class="far fa-user fa-fw fahi"></i>
+                  <input type="password" name="password" id="passeresetP" placeholder="Nueva contraseña" data-translate="password-ph">
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="list">
+          <ul>
+            <li>
+              <button type="button" class="button button-app primary button-login" @click="forgotPatient">
+                Restablecer
+              </button>
+            </li>
+          </ul>
+        </div>
+        <br>
+        <div class="list">
+          <ul>
+            <li>
+              <button type="button" class="button button-app primary button-recover back button-back" @click="goBack">
+                Ingresar
+              </button>
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    methods: {
+      forgotPatient: function () {
+        var $ = this.$;
+        var app = this.$app;
+        var router = this.$router;
+        var prloder = app.dialog.preloader('Restableciendo Contraseña');
+        solstar.ajaxRequest(`auth/resetPassSms/${$('#smscoderesetP').val() || ''}`, 'POST', function(data) {
+            if(prloder)
+              prloder.close();
+            if(data.success) {
+              solstar.setSession(solstar.params.sessionToken, data.token);
+              solstar.relocate(solstar.params.indexpage);
+              console.log(data)
+            } else {
+              app.dialog.alert(data.message);
+            }
+          }, {
+            user: $('#emailresetP').val() || '',
+            password: $('#passeresetP').val() || '',
+          }, true, null, function(err) {
+            if(prloder)
+              prloder.close();
+            if(err.data.responseJSON) {
+              console.log('Ha Ocurrido un error RESET', err);
+              app.dialog.alert(err.data.responseJSON.message || 'Ha Ocurrido un error');
+            } else {
+              console.log('Ha Ocurrido un error RESET', err);
+              app.dialog.alert('Ha Ocurrido un error');
+            }
+          }
+        );
+      }, 
+      goBack: function() {
+        app.loginScreen.close();
+        router.back();
+      }
+    }
+  }
+</script>

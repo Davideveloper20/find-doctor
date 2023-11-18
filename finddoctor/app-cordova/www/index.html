@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!--
+  Customize this policy to fit your own app's needs. For more guidance, see:
+      https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+  Some notes:
+      * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+      * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+      * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+          * Enable inline JS: add 'unsafe-inline' to default-src
+  -->
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#2196f3">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <title>FindDoctor</title>
+
+
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/framework7/3.5.2/css/framework7.min.css">-->
+  <link rel="stylesheet" href="css/framework7.css">
+  <link rel="stylesheet" href="libs/fontawesome-free-5.13.1-web/css/all.css">
+  <link rel="stylesheet" type="text/css" href="libs/inteldialup/css/intlTelInput.css" />
+  <link rel="stylesheet" href="css/icons.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+  <div id="app">
+    
+    <div class="statusbar"></div>
+      
+      <div class="panel panel-left panel-reveal">
+        <div class="block">
+          <div class="list links-list">
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/">Buscar médicos</a></li>
+              <li><a href="/search">Médicos</a></li>
+              <li><a href="#view-wallet" class="tab-link" onclick="app.router.navigate('/wallet/')">Wallet</a></li>
+              <li><a onclick="app.router.navigate('/profile1/')">Perfil</a></li>
+              <!--<li class="">
+                <a href="#" class="tab-link external item-link panel-close" @click="logout">
+                  <div class="item-content no-padding">
+                    <div class="item-inner">
+                      <div class="item-title">
+                        <i class="icon f7-icons ios-only">logout</i>
+                        <i class="icon material-icons md-only">exit_to_app</i> 
+                        Salir
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </li>-->
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+    <!-- Views/Tabs container -->
+    <div class="views tabs ios-edges">
+      <!-- Tabbar for switching views-tabs -->
+      <div class="toolbar tabbar-labels toolbar-bottom-md custom-tabbar no-after shadow-inverted-lg no-highlight">
+        <div class="toolbar-inner">
+          <a href="#view-profile" class="tab-link" onclick="app.router.navigate('/myprofile/')">
+            <i class="far fa-user-circle fa-2x"></i>
+          </a>
+          <a href="#view-wallet" class="tab-link" onclick="app.router.navigate('/wallet/')">
+            <i class="fas fa-wallet fa-2x"></i>
+          </a>
+          <a href="#view-home" class="tab-link tab-link-active" onclick="app.router.navigate('/')">
+            <i class="fas fa-search fa-2x"></i>
+          </a>
+          <a href="#view-learn" class="tab-link" onclick="app.router.navigate('/learn/')">
+            <i class="fas fa-book fa-2x"></i>
+          </a>
+          <a href="#view-alerts" class="tab-link" onclick="app.router.navigate('/alerts/')">
+            <i class="fas fa-bell fa-2x"></i>
+          </a>
+        </div>
+      </div>
+       <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
+      <div id="view-profile" class="view tab"></div>
+      <!-- Catalog View -->
+      <div id="view-wallet" class="view tab"></div>
+      <!-- Settings View -->
+      <div id="view-home" class="view view-main tab tab-active"></div>
+      <!-- Settings View -->
+      <div id="view-learn" class="view tab"></div>
+      <!-- Settings View -->
+      <div id="view-alerts" class="view tab"></div>
+    </div>
+  </div>
+  <!-- <script type="text/javascript" src="cordova.js"></script> -->
+  <script src="libs/jQuery/jquery-2.2.4.min.js"></script>
+  <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/framework7/3.5.2/js/framework7.min.js"></script>-->
+  <script src="js/framework7.js"></script>
+  <script src="js/info.js"></script>
+  <script src="js/solstar/solstar.js"></script>
+  <script src="js/conf.js"></script>
+  <script src="js/routes.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/fn.js"></script>
+  <script src="js/backbutton.js"></script>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+
+  <!-- RXJS -->
+  <script src="https://unpkg.com/rxjs@6.4.0/bundles/rxjs.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.1/uuid.min.js"></script>
+
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyBwhHfQFim8GLxFomqZaHE-9oK6iXRXrLU",
+      authDomain: "finddoctor-7c44f.firebaseapp.com",
+      databaseURL: "https://finddoctor-7c44f.firebaseio.com",
+      projectId: "finddoctor-7c44f",
+      storageBucket: "finddoctor-7c44f.appspot.com",
+      messagingSenderId: "215645564149",
+      appId: "1:215645564149:web:69571acb1fa726cce5e9bc",
+      measurementId: "G-DTK6YL82ZG"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    var db = firebase.firestore();
+
+    firebase.firestore().enablePersistence().catch(function(err) {
+        if (err.code == 'failed-precondition') {
+            console.log(err.code);
+        } else if (err.code == 'unimplemented') {
+            console.log(err.code);
+        }
+    });
+  </script>
+</body>
+</html>

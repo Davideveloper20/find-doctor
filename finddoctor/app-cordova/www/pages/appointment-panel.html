@@ -1,0 +1,370 @@
+<template>
+    <div class="page">
+      <div class="navbar bg-color-white">
+        <div class="navbar-inner">
+          <div class="left sliding">
+            <a href="#" class="link back">
+              <i class="material-icons text-color-primary">arrow_backward</i>
+            </a>
+          </div>
+          <div class="title sliding text-color-light mL text-align-left no-uppercase title-font-16">
+            Búsqueda
+          </div>
+        </div>
+      </div>
+      <!-- <div class="page-content login-screen-content pb-0 ptr-content" @ptr:refresh="loadMore"> -->
+        <div class="page-content login-screen-content pb-0 ptr-content">
+        <div class="ptr-preloader" style="top: 5px">
+          <div class="preloader"></div>
+          <div class="ptr-arrow"></div>
+        </div>
+        <div class="block text-align-center">Panel de Citas</div>
+        <div class="block">
+
+          {{#each doctores}}
+          
+          <div class="card">
+            <div class="list media-list no-margin">
+              <ul>
+                <li>
+                  <div class="item-content">
+                    <!-- <div class="item-media">
+                      <img src="{{profileimage}}" width="60" class="rounded-10" />
+                    </div> -->
+                    <div class="item-inner">
+                      <div class="item-title-row">
+                        <div class="item-title mR title-font-14"
+                          onclick="app.router.navigate('/doctor-detail/{{idusers}}')">Doctor: Shawn
+                          {{document}} 
+                         
+                        </div>
+                        
+                        <!-- <div class="item-after" onclick="app.router.navigate('/doctor-detail/{{idusers}}')">
+                         <i class="material-icons dorado title-font-18">star</i>
+                        </div> -->
+                      </div>
+                      <hr>
+                      <div class="item-subtitle mL title-font-14 text-color-light" style="white-space: normal; font-weight: bolder;">
+                        {{name}}  Cita: 15 de Mayo del 2021 
+                      </div>
+                      
+                      <div class="item-text mL text-color-primary title-font-16 margin-top">
+                        {{name}}   Hora : 10:00 am 
+                      </div>
+                      <div class="item-text margin-top" style="max-height: unset">
+                        <div class="row">
+                          <div class="col-20">
+                            
+                            <button @click="requestChat({{idusers}}, '{{fullname}}')"
+                              class="button button-app button-cart primary fit solid mL no-margin-left">
+                              <i class="material-icons title-font-18">comment</i>
+                            </button>
+                            
+                          </div>
+                          <div class="col-20">
+                            <button class="button button-app button-cart primary fit solid mL no-margin-left">
+                              <i class="material-icons title-font-18">video_call</i>
+                            </button>
+                          </div>
+  
+                          <div class="col-60">
+  
+                            <button onclick="app.router.navigate('/doctor-detail1/')"
+                              class="button button-app button-cart primary fit solid"
+                              style="border-radius: 50px; width: 110px; max-width: 120px;">
+                              Ver perfil
+                            </button>
+                          </div>
+  
+                          <!--<div class="block">
+  
+                            <input type="text" placeholder="Your birth date" readonly="readonly" id="demo-calendar-default"/>
+                          </div>-->
+  
+                          <!--<div class="col-25">
+                              <a onclick="app.router.navigate('/doctor-book/{{idusers}}')" class="button button-app primary fit solid mL button-app-2 margin-right">Agendarrrrrrrr</a>
+                            </div>-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+  
+  
+            <!-- <div class="block">
+              <div class="block-title" style="font-weight: bolder;">ReAgendar Cita</div>
+              <div class="list no-hairlines-md">
+                <ul>
+                  <li>
+                    <div class="item-content item-input">
+                      <div class="item-inner">
+                        <div class="item-input-wrap">
+                          <input type="text" placeholder="Select date" readonly="readonly" id="demo-calendar-events" />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+  
+            </div>  
+           
+  
+            <div class="row">
+              <div class="col-100">
+                <button @click="appointmentPatient({{idusers}})" class="button button-app button-cart primary fit solid"
+                  style="border-radius: 50px; width: 110px; max-width: 120px; margin-bottom: 30px">
+                  ReAgendar
+                </button>
+              </div>
+            </div>
+             -->
+
+          </div>
+          {{/each}}
+          
+        </div>    
+  
+  
+  
+        <!--FINAL DE PAGE CONTENT-->
+  
+        <div class="popup p-paisajes">
+          <div data-pagination='{"el": ".swiper-pagination"}' data-space-between="50"
+            class="swiper-container swiper-init demo-swiper">
+            <div class="swiper-pagination"></div>
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">Slide 1</div>
+              <div class="swiper-slide">Slide 2</div>
+              <div class="swiper-slide">Slide 3</div>
+              <div class="swiper-slide">Slide 4</div>
+              <div class="swiper-slide">Slide 5</div>
+              <div class="swiper-slide">Slide 6</div>
+              <div class="swiper-slide">Slide 7</div>
+              <div class="swiper-slide">Slide 8</div>
+              <div class="swiper-slide">Slide 9</div>
+              <div class="swiper-slide">Slide 10</div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </template>
+  <script>
+    return {
+      data: function () {
+        var doctors = this.doctors;
+       // var doctors1 = Object.entries(doctors);
+        //var doctors1 = Object.keys(doctors);
+             
+
+        //console.log(doctors.date_appoint);
+        //console.log(Object.values(doctors));
+
+        // $.each(doctors, (index, value) =>{
+        //     console.log(value);
+        //     docu = value['document'];
+        //   });
+
+        
+
+
+       
+        return {
+          doctores: doctors,
+        };
+      },
+  
+      on: {
+        pageInit: function () {
+          var self = this;
+        },
+        pageAfterIn: function (event, page) {
+          var calendarBirth = app.calendar.create({
+            inputEl: "#birthdate",
+            locale: "es-419",
+            firstDay: 0,
+            openIn: "popover",
+            inputReadOnly: true,
+            backdrop: true,
+            toolbar: true,
+            toolbarCloseText: "Hecho",
+            header: true,
+            dateFormat: "yyyy-mm-dd",
+            //minDate: moment().subtract(100, 'years').locale('es').format('YYYY-MM-DD'),
+            //maxDate: moment().subtract(18, 'years').locale('es').format('YYYY-MM-DD'),
+          });
+  
+          var today = new Date();
+          var weekLater = new Date().setDate(today.getDate() + 7);
+          var calendarEvents = app.calendar.create({
+            inputEl: "#demo-calendar-events",
+            //dateFormat: "M dd yyyy",
+            dateFormat: "yyyy-mm-dd",
+            events: {
+              from: today,
+              to: weekLater,
+            },
+          });
+        },
+      },
+      methods: {
+        loadMore: function (e, done) {
+          var self = this;
+          var $ = self.$$;
+  
+          setTimeout(function () {
+            homeView.router.refreshPage();
+            done();
+          }, 1000);
+        },
+        goto: function (iddoctor) {
+          app.router.navigate("/doctor-detail/" + iddoctor);
+        },
+        startChat: function (iddoctor, fullname, prloder) {
+          if (prloder) {
+            prloder.close();
+          }
+          console.log(
+            "chatt",
+            String(app.data.user.idusers),
+            app.data.user.fullname
+          );
+  
+          db.collection(`chat`).add({
+            code: uuid.v1(),
+            doctor: {
+              id: String(iddoctor),
+              name: fullname,
+            },
+            patient: {
+              id: String(app.data.user.idusers),
+              name: app.data.user.fullname,
+            },
+            messages: [],
+            created_at: new Date(),
+            updated_at: new Date(),
+          });
+  
+          app.router.navigate("/doctor-chat/" + iddoctor);
+  
+          solstar.ajaxRequest(
+            `App/getDoctorById/${iddoctor}`,
+            "GET",
+            function (data) {
+              if (data.in_chat == 1 || data.video_in_chat == 1) {
+                if (prloder) {
+                  prloder.close();
+                  app.dialog.alert(
+                    "El doctor se encuentra actualmente en una consulta. Intentelo mas tarde...",
+                    ""
+                  );
+                }
+                return;
+              }
+  
+              if (prloder) {
+                prloder.close();
+              }
+              console.log(
+                "chatt",
+                String(app.data.user.idusers),
+                app.data.user.fullname
+              );
+  
+              db.collection(`chat`).add({
+                code: uuid.v1(),
+                doctor: {
+                  id: String(iddoctor),
+                  name: fullname,
+                },
+                patient: {
+                  id: String(app.data.user.idusers),
+                  name: app.data.user.fullname,
+                },
+                messages: [],
+                created_at: new Date(),
+                updated_at: new Date(),
+              });
+  
+              app.router.navigate("/doctor-chat/" + iddoctor);
+            }
+          );
+        },
+        requestChat: function (iddoctor, fullname) {
+          var self = this;
+          var prloder = app.dialog.preloader("Iniciando chat...");
+          console.log(app.data.user);
+  
+          const balance = app.data.user.saldo;
+          if (balance < 15000) {
+            if (prloder) {
+              console.log(balance);
+              prloder.close();
+  
+              app.params.dialog.buttonCancel = "Cancelar";
+              app.params.dialog.buttonOk = "Aceptar";
+  
+              var dialog = app.dialog.prompt(
+                "Su saldo se ha acabado, ¿desea recargar?",
+                "",
+                function (amount) {
+                  if (amount >= 5000) {
+                    app.dialog.confirm(
+                      "¿Estas seguro que quieres recargar " + amount + " ?",
+                      "",
+                      function () {
+                        // solstar.ajaxRequest(`rechargeAmount`, "POST", function(data){
+                        //   console.log(data);
+                        //   app.dialog.alert('Se ha recargado ' + amount + ' exitosamente', '');
+                        //   window.location.href = `https://conexioncibernetica.com/demo4/fdadminstar/payments/pay/${data.payment_transaction}`;
+                        // }, { amount, userId: app.data.user.idusers });
+                      }
+                    );
+                  } else {
+                    app.dialog.alert(
+                      "El saldo a recargar debe ser minimo de 5,000.00",
+                      ""
+                    );
+                  }
+                }
+              );
+  
+              dialog.open();
+  
+              return;
+            }
+          }
+  
+          self.startChat(iddoctor, fullname, prloder);
+        },
+  
+        appointmentPatient: function (iddoctor) {
+  
+          app.data.appoint = {
+            date_appoint: $('#demo-calendar-events').val(),
+            hours: $('select[name="hours"] option:selected').text(),
+            minute: $('select[name="minute"] option:selected').text(),
+            hours_end: $('select[name="hours_end"] option:selected').text(),
+            minute_end: $('select[name="minute_end"] option:selected').text(),
+            id_doctor: iddoctor,
+            document: app.data.user.appdocument,
+            name_patient: app.data.user.fullname
+            //hours : $('#hours').html(),
+            //minute : $('#minute').html()
+          }
+  
+          app.router.navigate('/appointment/');  
+          
+  
+        },
+  
+  
+  
+  
+  
+  
+      },
+    };
+  </script>
